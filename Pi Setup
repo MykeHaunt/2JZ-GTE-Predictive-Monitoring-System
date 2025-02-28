@@ -1,0 +1,6 @@
+# Install minimal OS
+sudo raspi-config nonint do_memory_split 256
+sudo apt install python3-venv
+
+# Run in low-power mode
+echo "conservative" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor

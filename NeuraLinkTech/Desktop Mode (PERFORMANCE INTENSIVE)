@@ -1,0 +1,3 @@
+if platform.system() == 'Windows':
+    from win32process import SetPriorityClass, HIGH_PRIORITY_CLASS
+    SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS)
