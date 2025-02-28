@@ -1,8 +1,0 @@
-// Flutter platform channels
-Future<void> initializeService() async {
-  if (Platform.isAndroid) {
-    await AndroidNativeService().initialize();
-  } else if (Platform.isIOS) {
-    await IOSNativeService().initialize();
-  }
-}
