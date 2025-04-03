@@ -1,0 +1,41 @@
+Usage Instructions for quickstart.sh
+======================================
+
+Overview:
+---------
+This quickstart script initializes and runs the 2JZ-GTE Predictive Monitoring System. It sets up your Python environment, launches the backend service, and serves the frontend application using Python's built-in HTTP server.
+
+Prerequisites:
+--------------
+- Python (version 3 recommended) and pip must be installed.
+- The file "requirements.txt" should be present if your backend requires additional Python dependencies.
+- The backend script "main.py" must exist in the main directory.
+- The "frontend" directory must exist and contain the front end web application files.
+
+Usage Steps:
+------------
+1. Open a terminal in the main directory of your project.
+
+2. Make the quickstart script executable:
+      chmod +x quickstart.sh
+
+3. Run the quickstart script:
+      ./quickstart.sh
+
+4. The script will perform the following tasks:
+   - Install Python dependencies from "requirements.txt" (if available).
+   - Launch the backend service using "main.py" in the background.
+   - Serve the frontend application from the "frontend" directory using Python's HTTP server on port 8000.
+
+5. To access the front end, open your web browser and navigate to:
+      http://localhost:8000
+
+6. To stop the services, press CTRL+C in the terminal. This will gracefully terminate both the backend and frontend processes.
+
+Notes:
+------
+- If any of the required components (dependencies, backend script, or frontend directory) are missing, the script will output a message indicating the issue.
+- Customize the script as needed to match your project's structure or additional requirements.
+- Ensure you have the necessary permissions and network access to run local servers on your machine.
+
+For further details, refer to the project's README or accompanying documentation.
