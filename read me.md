@@ -1,15 +1,15 @@
 ## 2JZ-GTE Turbo Monitoring System
 
-Real-time monitoring and predictive maintenance system for 2JZ-GTE turbocharged engines.
+Real-time monitoring and predictive maintenance system for 2JZ-GTE sequentially turbocharged engines.
 
 ## Features
 
--Real-time sensor monitoring
--Predictive failure analysis
--Interactive dashboards
--Synthetic data generation
--LSTM-based anomaly detection
--Prophet forecasting
+Real-time sensor monitoring
+Predictive failure analysis
+Interactive dashboards
+Synthetic data generation
+LSTM-based anomaly detection
+Prophet forecasting
 
 
 ## Installation
