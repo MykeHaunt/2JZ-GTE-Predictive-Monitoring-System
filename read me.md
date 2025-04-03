@@ -11,7 +11,7 @@ Synthetic data generation
 LSTM-based anomaly detection
 Prophet forecasting
 
-Installation
+## Installation
 
 git clone https://github.com/yourusername/2JZ-GTE-Turbo-Monitor.git
 cd 2JZ-GTE-Turbo-Monitor
