@@ -1,6 +1,6 @@
 # Liability Waiver and Release of Claims
 
-By using the "2JZ-GTE Predictive Monitoring System" software (the “Software”), you acknowledge and agree to the following:
+By using the "2JZ-GTE Predictive Monitoring System" software, you acknowledge and agree to the following:
 
 1. **Assumption of Risk:**  
    You understand and acknowledge that the Software is provided “as is” and that its use involves inherent risks. These risks include, but are not limited to, the possibility of errors, data inaccuracies, or malfunction that may result in damage to hardware, loss of data, or other consequential damages.
