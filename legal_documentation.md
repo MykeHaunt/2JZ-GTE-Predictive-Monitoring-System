@@ -9,7 +9,7 @@ _Last Updated: [03.04.2025]_
    Under no circumstances shall the developers, contributors, or any affiliated parties be liable for any direct, indirect, incidental, special, or consequential damages arising from the use or inability to use the Software, even if advised of the possibility of such damages.
 
 3. **Usage Terms:**  
-   - **Personal and Commercial Use:** You are permitted to use, modify, and distribute the Software according to the terms of its open source license [MIT_license.txt].
+   - **Personal and Commercial Use:** You are permitted to use, modify, and distribute the Software according to the terms of its open source license. This project is licensed under the MIT License. See the [MIT_license.txt](MIT_license.txt) file for details.
    - **Compliance:** You agree to comply with all applicable local, state, national, and international laws in connection with your use of the Software.
    - **Modification and Distribution:** Any modifications or derivative works must retain this disclaimer and any other notices contained in the original distribution.
 
