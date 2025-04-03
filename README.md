@@ -29,7 +29,7 @@ To install the 2JZ-GTE Predictive Monitoring System, follow these steps:
 				
 	https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/blob/main/2JZ-GTE%20Turbo%20Monitoring%20System/requirements.txt
 	
-	_Ensure that all necessary libraries and packages are installed. A comprehensive list of dependencies can be found in the requirements.txt file._
+	Ensure that all necessary libraries and packages are installed. A comprehensive list of dependencies can be found in the requirements.txt file.
 
 **Usage**
 
