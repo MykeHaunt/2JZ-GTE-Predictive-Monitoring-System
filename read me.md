@@ -18,7 +18,9 @@ cd 2JZ-GTE-Turbo-Monitor
 chmod +x setup_and_run.sh
 ./setup_and_run.sh
 
+## Initialization
 
+2JZ-GTE Turbo Monitoring System/__init__.py
 
 ## License
 
