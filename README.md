@@ -15,21 +15,16 @@ _The 2JZ-GTE Predictive Monitoring System is an advanced diagnostic tool enginee
 
 To install the 2JZ-GTE Predictive Monitoring System, follow these steps:
 
-	1.	Clone the Repository:
+	1.Clone the Repository:
+	git clone https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System.git
 
-			git clone https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System.git
-`
-
-	2.	Navigate to the Project Directory:
-
-		cd 2JZ-GTE-Predictive-Monitoring-System
-`
+	2.Navigate to the Project Directory:
+	cd 2JZ-GTE-Predictive-Monitoring-System
 
 	3.	Install Required Dependencies:
-				
 	https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/blob/main/2JZ-GTE%20Turbo%20Monitoring%20System/requirements.txt
 	
-	Ensure that all necessary libraries and packages are installed. A comprehensive list of dependencies can be found in the requirements.txt file.
+_Ensure that all necessary libraries and packages are installed. A comprehensive list of dependencies can be found in the requirements.txt file._
 
 **Usage**
 
