@@ -3,21 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2JZ-GTE Predictive Monitoring Dashboard</title>
+  <title>2JZ‑GTE Quick Monitor</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- Include Chart.js via CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header>
-    <h1>2JZ-GTE Predictive Monitoring Dashboard</h1>
-  </header>
   <main>
-    <section id="monitoring-data">
-      <!-- Canvas element where the engine metrics chart will be rendered -->
-      <canvas id="engineChart"></canvas>
+    <section id="status-bar">
+      <span id="status">Connecting…</span>
+      <time id="lastUpdate"></time>
     </section>
+    <section id="readouts" class="grid"></section>
   </main>
+
+  <!-- Minimal chart support for forecast -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script> <!-- Chart.js 4.x  -->
   <script src="app.js"></script>
 </body>
 </html>
