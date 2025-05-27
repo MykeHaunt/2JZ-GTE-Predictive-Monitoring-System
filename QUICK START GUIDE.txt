@@ -1,4 +1,3 @@
-
 # Installation & Setup Guide – 2JZ-GTE Predictive Monitoring System
 
 ---
