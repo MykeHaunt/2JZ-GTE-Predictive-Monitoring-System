@@ -1,51 +1,59 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Sample data for demonstration; replace with dynamic API call if available.
-  const engineData = {
-    labels: ['0s', '1s', '2s', '3s', '4s', '5s'],
-    datasets: [{
-      label: 'Engine Temperature (°C)',
-      data: [90, 92, 93, 95, 94, 96],
-      borderColor: 'rgba(255, 99, 132, 1)',
-      backgroundColor: 'rgba(255, 99, 132, 0.2)',
-      fill: true,
-      tension: 0.1
-    }]
-  };
+// DOM references
+const statusEl = document.getElementById('status');
+const lastUpdateEl = document.getElementById('lastUpdate');
+const readoutsEl = document.getElementById('readouts');
 
-  const ctx = document.getElementById('engineChart').getContext('2d');
-  const engineChart = new Chart(ctx, {
-    type: 'line',
-    data: engineData,
-    options: {
-      responsive: true,
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Time'
-          }
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'Temperature (°C)'
-          }
-        }
-      }
+// Fetch and render loop
+async function refresh() {
+  try {
+    const [sRes, aRes] = await Promise.all([
+      fetch('/api/sensors'),
+      fetch('/api/anomalies')
+    ]);
+    if (!sRes.ok || !aRes.ok) throw new Error('Network error');
+
+    const sensors   = await sRes.json();
+    const anomalies = await aRes.json();
+
+    renderTiles(sensors, anomalies);
+
+    const now = new Date();
+    statusEl.textContent = 'Connected';
+    lastUpdateEl.textContent = now.toLocaleTimeString();
+  } catch (err) {
+    statusEl.textContent = 'Error';
+    console.error(err);
+  }
+}
+
+// Build sensor tiles
+function renderTiles(sensors, anomalies) {
+  readoutsEl.innerHTML = '';
+  sensors.forEach(({ id, name, value, unit }) => {
+    const tile = document.createElement('div');
+    tile.className = 'tile';
+
+    const val    = document.createElement('h2');
+    val.textContent = `${value.toFixed(0)}`;  // zero‑decimal for speed of reading
+
+    const label  = document.createElement('p');
+    label.textContent = name;
+
+    tile.append(val, label);
+
+    // only show anomaly if above 0.5
+    const score = anomalies[id] ?? 0;
+    if (score > 0.5) {
+      const warn = document.createElement('div');
+      warn.className = 'alert';
+      warn.textContent = `⚠ ${score.toFixed(2)}`;
+      tile.append(warn);
     }
-  });
 
-  // Optional: Fetch live data from your predictive monitoring API endpoint.
-  // Uncomment and modify the following code if you have an API endpoint to retrieve data.
-  /*
-  fetch('/api/engine-data')
-    .then(response => response.json())
-    .then(data => {
-      // Assuming the API returns an object with `labels` and `data` arrays.
-      engineChart.data.labels = data.labels;
-      engineChart.data.datasets[0].data = data.data;
-      engineChart.update();
-    })
-    .catch(error => console.error('Error fetching engine data:', error));
-  */
-});
+    readoutsEl.append(tile);
+  });
+}
+
+// Start polling every 1.5 s
+setInterval(refresh, 1500);
+refresh();
