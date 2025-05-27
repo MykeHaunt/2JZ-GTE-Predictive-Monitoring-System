@@ -1,4 +1,4 @@
-# 2JZ-GTE Predictive Monitoring System – Comprehensive Documentation
+# 2JZ-GTE Predictive Monitoring System 📈
 
 ---
 
