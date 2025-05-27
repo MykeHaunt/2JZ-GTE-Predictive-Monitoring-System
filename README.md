@@ -1,64 +1,39 @@
-_The 2JZ-GTE Predictive Monitoring System is an advanced diagnostic tool engineered for the Toyota 2JZ-GTE engine. This system integrates real-time sensor data acquisition with predictive analytics to enhance engine performance monitoring and preempt potential failures._
+# 2JZ-GTE Predictive Monitoring System – Frontend
 
-### **Key Features**
+## Project Overview
 
-	
+The 2JZ-GTE Predictive Monitoring System is an open-source automotive platform designed for Toyota 2JZ-GTE engines. It captures real-time vehicle telemetry and applies predictive algorithms to monitor engine health and performance. This project includes both a backend analytics engine and an updated frontend interface. The backend trains machine learning models on historical sensor data to predict component wear and failures. The new frontend provides users with a graphical interface for visualizing live and historical engine data, viewing predictive model outputs, and configuring system settings.
 
-> •	Real-Time Sensor Monitoring: Continuously collects and displays data from critical engine sensors, providing immediate insights into engine performance.
-> 	•	Predictive Failure Analysis: Utilizes machine learning algorithms to analyze sensor data, forecasting potential component failures before they occur.
-> 	•	Interactive Dashboards: Features user-friendly interfaces that visualize complex data, facilitating intuitive understanding and decision-making.
-> 	•	Synthetic Data Generation: Employs data augmentation techniques to simulate various engine conditions, enhancing the robustness of predictive models.
-> 	•	LSTM-Based Anomaly Detection: Implements Long Short-Term Memory networks to detect anomalies in time-series sensor data, improving the accuracy of failure predictions.
-> 	•	Prophet Forecasting: Integrates the Prophet forecasting model to predict future engine performance trends based on historical data.
+## Features
 
-### **Installation**
+- **Real-time Dashboard**: Displays live engine parameters (RPM, boost pressure, EGT, coolant temperature, oil pressure, etc.)
+- **Historical Data Visualization**: Time-series graphs for trend analysis and anomaly detection.
+- **Predictive Alerts**: Visual warnings based on forecasted component failure.
+- **Diagnostic Overview**: Health summaries and maintenance recommendations.
+- **Customizable Layout**: Users can configure display panels and metric visibility.
+- **Responsive Design**: Works seamlessly across desktops, tablets, and mobile devices.
+- **Multi-Language Support**: Configurable localization system.
+- **Secure Access**: Optional authentication and user-role support.
+- **Theming and Branding**: Customizable dark/light themes and logos.
+- **API Integration**: Pulls data and predictions via backend REST API.
+- **Data Logging Control**: UI-based toggling of telemetry logging.
 
-To install the 2JZ-GTE Predictive Monitoring System, follow these steps:
+## Improvements Since Previous Version
 
-	1.Clone the Repository:
-	git clone https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System.git
+- Replaced minimal or absent frontend with a complete graphical interface.
+- Built with a modern JavaScript framework for modularity and performance.
+- Interactive charts, responsive layout, and mobile support.
+- Gauge and graph widgets for real-time and historical data visualization.
+- Streamlined backend API integration.
+- Reduced frontend-backend latency with efficient polling.
+- Frontend-configurable settings and thresholds.
+- Added integrated help, documentation, and developer hints.
+- Simplified dependency tree and environment setup.
+- Fully documented and maintainable codebase.
 
-	2.Navigate to the Project Directory:
-	cd 2JZ-GTE-Predictive-Monitoring-System
+## Installation
 
-	3.Install Required Dependencies:
-	https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/blob/main/2JZ-GTE%20Turbo%20Monitoring%20System/requirements.txt
-	
-_Ensure that all necessary libraries and packages are installed. A comprehensive list of dependencies can be found in the requirements.txt file._
-
-**Usage**
-
-_Detailed instructions on configuring and utilizing the system will be provided in the forthcoming release. Users will be guided through the setup process, data collection procedures, and interpretation of analytical results._
-
-**Legal Disclaimer**
-
-_Please be advised that the 2JZ-GTE Predictive Monitoring System is provided “as is,” without any express or implied warranties. The developers shall not be held liable for any damages arising from the use of this software. Users are encouraged to review the [liability waiver](https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/blob/main/liability_waiver.md) for more information._
-
-**Contributing**
-
-_Contributions to enhance the system’s functionality and performance are welcome. Prospective contributors are requested to adhere to the guidelines outlined in the [Contributor License Agreement](https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/blob/main/CLA.md)._
-
-**License**
-
-This project is licensed under the MIT License. For detailed information, please refer to the [MIT license](https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/blob/main/MIT_license.txt).
-
-
-**Note: This document serves as a preliminary overview of the 2JZ-GTE Predictive Monitoring System. Comprehensive documentation, including detailed user guides and technical specifications, will be made available upon the official release.**
-
-
-`Post Scriptum: The information provided herein is based on the current state of the project as of April 3, 2025. For the most recent updates and developments, please refer to the official GitHub repository: https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System.`
-
-### **PREVIEW**
-
-
-
-
-https://github.com/user-attachments/assets/5cb22567-3d09-4e0f-b4f6-66407c18784b
-
-
-![IMG_9850](https://github.com/user-attachments/assets/4ab50418-02a6-4340-83ce-a849228fb65c)
-![IMG_9848](https://github.com/user-attachments/assets/fce59781-7af4-4844-9145-aa9094473514)
-![IMG_9849](https://github.com/user-attachments/assets/2df75f5f-1864-49a7-a0d7-661327724bc0)
-![IMG_9851](https://github.com/user-attachments/assets/3073f061-6ff1-44fc-86a7-fc1247b6ca82)
-
-**Full Changelog**: https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/compare/pre-release...pre-release
+```bash
+git clone https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System.git
+cd 2JZ-GTE-Predictive-Monitoring-System/frontend
+npm install
