@@ -1,41 +1,123 @@
-Usage Instructions for quickstart.sh
-======================================
 
-Overview:
----------
-This quickstart script initializes and runs the 2JZ-GTE Predictive Monitoring System. It sets up your Python environment, launches the backend service, and serves the frontend application using Python's built-in HTTP server.
+# Installation & Setup Guide – 2JZ-GTE Predictive Monitoring System
 
-Prerequisites:
---------------
-- Python (version 3 recommended) and pip must be installed.
-- The file "requirements.txt" should be present if your backend requires additional Python dependencies.
-- The backend script "main.py" must exist in the main directory.
-- The "frontend" directory must exist and contain the front end web application files.
+---
 
-Usage Steps:
-------------
-1. Open a terminal in the main directory of your project.
+## Prerequisites
 
-2. Make the quickstart script executable:
-      chmod +x quickstart.sh
+To run the system, you must have the following dependencies installed on your machine:
 
-3. Run the quickstart script:
-      ./quickstart.sh
+- **Node.js**: Version 14.x or higher  
+- **npm**: Version 6.x or higher  
+- **Python**: Version 3.8 or higher (for backend support)
 
-4. The script will perform the following tasks:
-   - Install Python dependencies from "requirements.txt" (if available).
-   - Launch the backend service using "main.py" in the background.
-   - Serve the frontend application from the "frontend" directory using Python's HTTP server on port 8000.
+---
 
-5. To access the front end, open your web browser and navigate to:
-      http://localhost:8000
+## Step-by-Step Installation
 
-6. To stop the services, press CTRL+C in the terminal. This will gracefully terminate both the backend and frontend processes.
+### 1. Clone the Repository
 
-Notes:
-------
-- If any of the required components (dependencies, backend script, or frontend directory) are missing, the script will output a message indicating the issue.
-- Customize the script as needed to match your project's structure or additional requirements.
-- Ensure you have the necessary permissions and network access to run local servers on your machine.
+Start by cloning the repository from GitHub:
 
-For further details, refer to the project's README or accompanying documentation.
+```bash
+git clone https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System.git
+```
+
+### 2. Navigate to the Frontend Directory
+
+Change directory to the frontend portion of the project:
+
+```bash
+cd 2JZ-GTE-Predictive-Monitoring-System/frontend
+```
+
+### 3. Install Node.js Dependencies
+
+Install all required frontend dependencies using npm:
+
+```bash
+npm install
+```
+
+### 4. Configure Environment Variables
+
+Create a `.env` file in the `frontend` directory and add the following line:
+
+```env
+REACT_APP_API_URL=http://localhost:5000/api
+```
+
+Make sure this URL points to the backend server you are running.
+
+### 5. Start the Development Server
+
+Run the application in development mode:
+
+```bash
+npm start
+```
+
+By default, the application will be accessible at:
+
+```
+http://localhost:3000
+```
+
+---
+
+## Deployment Guidelines
+
+### Production Build
+
+To create a production build, run:
+
+```bash
+npm run build
+```
+
+This will generate optimized static files in the `build/` directory.
+
+### Hosting Options
+
+You can serve the built files using:
+
+- **Nginx**
+- **Apache**
+- **Netlify**
+- **Vercel**
+- **AWS S3**
+
+Ensure the environment variables and API endpoints are configured correctly for your chosen platform.
+
+---
+
+## Docker Deployment (Optional)
+
+### Build Docker Image
+
+```bash
+docker build -t 2jz-monitoring-frontend .
+```
+
+### Run the Container
+
+```bash
+docker run -d -p 80:80 2jz-monitoring-frontend
+```
+
+---
+
+## Backend Setup (Optional)
+
+If you also want to set up the backend for full functionality, refer to the backend documentation for detailed setup instructions, including Flask API configuration and sensor data acquisition.
+
+---
+
+## Notes
+
+- Ensure CORS settings on the backend allow requests from your frontend host.  
+- It is recommended to secure both frontend and backend with HTTPS when deployed publicly.
+
+---
+
+*End of installation guide.*
