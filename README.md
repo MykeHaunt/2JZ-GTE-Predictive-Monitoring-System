@@ -92,3 +92,127 @@ The system is bifurcated into two primary components:
 - **Authentication:** Implements secure access controls to protect sensitive data.
 
 ---
+
+
+# Installation & Setup Guide – 2JZ-GTE Predictive Monitoring System
+
+---
+
+## Prerequisites
+
+To run the system, you must have the following dependencies installed on your machine:
+
+- **Node.js**: Version 14.x or higher  
+- **npm**: Version 6.x or higher  
+- **Python**: Version 3.8 or higher (for backend support)
+
+---
+
+## Step-by-Step Installation
+
+### 1. Clone the Repository
+
+Start by cloning the repository from GitHub:
+
+```bash
+git clone https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System.git
+```
+
+### 2. Navigate to the Frontend Directory
+
+Change directory to the frontend portion of the project:
+
+```bash
+cd 2JZ-GTE-Predictive-Monitoring-System/frontend
+```
+
+### 3. Install Node.js Dependencies
+
+Install all required frontend dependencies using npm:
+
+```bash
+npm install
+```
+
+### 4. Configure Environment Variables
+
+Create a `.env` file in the `frontend` directory and add the following line:
+
+```env
+REACT_APP_API_URL=http://localhost:5000/api
+```
+
+Make sure this URL points to the backend server you are running.
+
+### 5. Start the Development Server
+
+Run the application in development mode:
+
+```bash
+npm start
+```
+
+By default, the application will be accessible at:
+
+```
+http://localhost:3000
+```
+
+---
+
+## Deployment Guidelines
+
+### Production Build
+
+To create a production build, run:
+
+```bash
+npm run build
+```
+
+This will generate optimized static files in the `build/` directory.
+
+### Hosting Options
+
+You can serve the built files using:
+
+- **Nginx**
+- **Apache**
+- **Netlify**
+- **Vercel**
+- **AWS S3**
+
+Ensure the environment variables and API endpoints are configured correctly for your chosen platform.
+
+---
+
+## Docker Deployment (Optional)
+
+### Build Docker Image
+
+```bash
+docker build -t 2jz-monitoring-frontend .
+```
+
+### Run the Container
+
+```bash
+docker run -d -p 80:80 2jz-monitoring-frontend
+```
+
+---
+
+## Backend Setup (Optional)
+
+If you also want to set up the backend for full functionality, refer to the backend documentation for detailed setup instructions, including Flask API configuration and sensor data acquisition.
+
+---
+
+## Notes
+
+- Ensure CORS settings on the backend allow requests from your frontend host.  
+- It is recommended to secure both frontend and backend with HTTPS when deployed publicly.
+
+---
+
+*End of installation guide.*
