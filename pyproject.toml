@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "2jz_monitoring"
+version = "0.1.0"
+description = "Real-time monitoring and predictive analytics for Toyota's 2JZ-GTE turbocharged engine"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+  {name = "Himalay Pandit", email = "your.email@example.com"}
+]
+dependencies = [
+  "obd",
+  "tensorflow",
+  "numpy",
+  "pandas",
+  "matplotlib",
+  "scikit-learn",
+  "flask",
+  "requests"
+]
+
+[project.urls]
+Homepage = "https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System"
+Repository = "https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System"
