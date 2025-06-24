@@ -4,8 +4,7 @@
 ![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![License](https://img.shields.io/github/license/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System)
 ![Status](https://img.shields.io/badge/status-WIP-yellow)
-<!-- Uncomment below once published to PyPI -->
-<!-- ![PyPI](https://img.shields.io/pypi/v/2jz-monitoring) -->
+![PyPI](https://img.shields.io/pypi/v/2jz-monitoring)
 
 > **WORK IN PROGRESS BY: H. Pandit**
 
@@ -55,6 +54,8 @@ Using Python, machine learning, and live OBD data, the system is designed to tra
    python main.py
    ```
 
+4. For troubleshooting, refer to the `environment.yml` file to verify dependencies. Ensure all required libraries are up-to-date.
+
 ---
 
 ## 📁 Project Structure
@@ -75,20 +76,22 @@ Using Python, machine learning, and live OBD data, the system is designed to tra
 
 ## 🔍 Coming Soon
 
-- 📈 Explainable AI integration (SHAP)
-- 📤 Cloud logging for remote diagnostics
-- 🧪 Test suite with CI support (pytest + GitHub Actions)
-- 📦 Packaged release (.whl, pip install support)
+- 📈 Explainable AI integration (SHAP) — Target release: Q3 2025
+- 📤 Cloud logging for remote diagnostics — Target release: Q4 2025
+- 🧪 Test suite with CI support (pytest + GitHub Actions) — Target release: Q3 2025
+- 📦 Packaged release (.whl, pip install support) — Target release: Q4 2025
 
 ---
 
 ## 📜 License
 
 This project is under the MIT License.  
-See LICENSE for details.
+See [LICENSE](https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/blob/main/LICENSE) for details.
 
 ---
 
 ## 🙏 Credits
 
 Inspired by Toyota engineering, OBD-II reverse engineering, and the tuner community.
+
+---
