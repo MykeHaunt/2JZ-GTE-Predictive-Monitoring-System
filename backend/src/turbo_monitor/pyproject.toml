@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "2JZ-GTE-Predictive-Monitoring-System"
+version = "0.1.0"
+description = "Real-time engine monitoring and predictive analytics for the Toyota 2JZ-GTE turbocharged engine."
+authors = [{ name = "H. Pandit" }]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+dependencies = [
+    "pandas",
+    "numpy",
+    "matplotlib",
+    "tensorflow",
+    "scikit-learn",
+    "dash",
+    "plotly",
+    "obd",
+    "joblib"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
