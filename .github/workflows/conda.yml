@@ -1,0 +1,43 @@
+name: Python Package using Conda
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: 3.10
+          activate-environment: 2jz-monitoring
+          environment-file: environment.yml
+
+      - name: Confirm environment packages
+        run: |
+          conda info
+          conda list
+
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 .
+
+      - name: Run tests with pytest
+        run: |
+          pip install pytest
+          pytest
