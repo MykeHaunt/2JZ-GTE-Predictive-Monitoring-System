@@ -1,0 +1,55 @@
+name: Build and Test Python Package using Conda
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: 3.10
+          activate-environment: 2jz-monitoring
+          environment-file: environment.yml
+
+      - name: Verify environment setup
+        run: conda list
+
+      - name: Install build tools
+        run: |
+          pip install build
+
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 .
+
+      - name: Run tests with pytest
+        run: |
+          pip install pytest
+          pytest
+
+      - name: Build Python package
+        run: |
+          python -m build
+
+      - name: Upload wheel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 2jz-gte-predictive-monitoring-package
+          path: dist/*.whl
