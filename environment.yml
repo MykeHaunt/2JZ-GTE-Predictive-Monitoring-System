@@ -1,12 +1,17 @@
-name: 2jz-monitoring
+name: 2jzgte-monitoring
 channels:
+  - conda-forge
   - defaults
 dependencies:
-  - python=3.10
+  - python>=3.8
   - flask
   - pandas
-  - joblib
+  - numpy
   - scikit-learn
+  - matplotlib
+  - seaborn
+  - joblib
   - gunicorn
+  - pip
   - pip:
-      - flask-cors
+      - python-dotenv
