@@ -2,83 +2,82 @@
 
 **Project:** 2JZ-GTE Predictive Monitoring System  
 **Maintainer:** H. Pandit  
-**License:** MIT License  
-**Status:** Experimental / Research-Grade  
-**Last Updated:** 2025-08-01
+**License Type:** GNU General Public License v3.0  
+**Status:** Academic / Research Use  
+**Last Revised:** 2025-08-01
 
 ---
 
-## 1. License Summary (MIT)
+## 1. License Summary (GPLv3)
 
-The MIT License is applied to this repository, granting free and unrestricted use, with the following stipulations:
+This project is licensed under the **GNU General Public License v3.0**.
 
-- Attribution must be maintained in all copies or substantial portions of the Software.
-- Usage is permitted for commercial, personal, and academic applications, **subject to liability and warranty disclaimers.**
-- The Software is provided **without warranty** and **as-is**, including fitness for any particular purpose.
+You are free to:
 
-For full terms, see [LICENSE](./LICENSE).
+- Use the Software for any purpose
+- Study how it works and modify it
+- Redistribute it (with or without changes) under the same GPLv3 license
+
+You must:
+
+- Include the original license when distributing the Software
+- Disclose your source code when distributing derivative works
+- Not impose further restrictions on the recipients
+
+Full text: [GNU GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ---
 
 ## 2. Contributor License Agreement (CLA)
 
-Before contributing, all developers must:
+All external contributors must:
 
-- Sign and submit the [CLA.md](./CLA.md)
-- Confirm that contributions are original or appropriately licensed
-- Agree to license all contributions under the same MIT terms
-
-Any pull request submitted without an accepted CLA may be refused or reverted.
+- Submit a signed [CLA.md](./CLA.md)
+- Grant the same freedoms outlined in GPLv3 for any code submitted
+- Certify that contributions are their original work or suitably licensed
 
 ---
 
-## 3. Waiver of Liability
+## 3. Liability & Warranty Disclaimer
 
-This Software is accompanied by a formal [liability_waiver.md](./liability_waiver.md), which clearly states that:
+As per [liability_waiver.md](./liability_waiver.md) and Sections 15 & 16 of GPLv3:
 
-- The Software is **not suitable** for direct vehicle integration without significant validation.
-- You must not rely solely on predictions made by the model for real-time driving or safety-critical decisions.
-- **The authors are not liable** for any consequences, including mechanical failure, injury, or legal penalties.
-
-**If you do not agree to the waiver, you are prohibited from using this Software.**
+- This software is provided **without any warranty**.
+- The author is not responsible for **hardware damage**, **data loss**, **injury**, or **regulatory violations**.
 
 ---
 
-## 4. Export and Security Restrictions
+## 4. Usage Restrictions
 
-- This Software may be subject to **export control laws** in some jurisdictions. You are responsible for ensuring that the use or distribution complies with such laws.
-- Do not use the Software in any activity related to weapons development, military systems, or autonomous weapon deployment without express permission.
+This project may not be used for:
+
+- Deployment in **life-critical or safety-critical systems**
+- **Commercial, for-profit integrations** without meeting full GPLv3 obligations
+- Violation of **local or international automotive software laws**
 
 ---
 
 ## 5. Trademark and Naming
 
-- The terms “2JZ-GTE” and “Toyota” are trademarks of Toyota Motor Corporation. Their mention herein is purely for reference and does not imply any endorsement.
-- This project is not affiliated with Toyota, Denso, or any subsidiary.
+- The term "2JZ-GTE" refers to an engine by Toyota Motor Corporation.
+- This project is neither affiliated with nor endorsed by Toyota, Denso, or any other manufacturer.
 
 ---
 
-## 6. Reuse, Commercialization & Derivative Works
+## 6. Jurisdiction
 
-You are allowed to:
-
-- Fork, redistribute, or remix the project
-- Build commercial services **provided** you maintain attribution and do not misrepresent the authorship
-- Request commercial licensing support or consulting through direct communication with the project maintainer
-
-**Do not falsely claim endorsement or association with the original author.**
+All legal matters relating to this software will be handled under the **laws of Bangladesh**, and disputes will be resolved under the **Arbitration Act, 2001**.
 
 ---
 
 ## 7. Legal Contact
 
-For inquiries regarding licensing, commercial usage, academic citation, or legal conflict resolution, contact:
+For legal clarifications, reach out via:
 
 **H. Pandit**  
 Dhaka, Bangladesh  
-Email: _[Redacted by GitHub Terms]_  
 GitHub: [MykeHaunt](https://github.com/MykeHaunt)
 
 ---
 
-© 2025 H. Pandit. All rights reserved.
+© 2025 H. Pandit. Licensed under GNU GPLv3.
