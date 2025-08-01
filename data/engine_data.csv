@@ -1,0 +1,11 @@
+RPM,Throttle,Load,CoolantTemp,IntakeAirTemp,Condition
+800,5,20,70,30,Normal
+1200,10,30,72,32,Normal
+1600,15,35,75,35,Normal
+2000,25,40,78,36,Normal
+2400,30,45,80,38,Anomaly
+2800,35,50,85,40,Anomaly
+3200,40,55,88,42,Anomaly
+3600,45,60,90,44,Fault
+4000,50,65,92,46,Fault
+4400,55,70,95,48,Fault
