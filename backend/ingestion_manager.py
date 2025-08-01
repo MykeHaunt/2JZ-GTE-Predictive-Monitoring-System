@@ -1,34 +1,51 @@
+# backend/ingestion_manager.py
+
+import logging
 from queue import Queue
-import time
 from backend.obd.ingestion import OBDIngestion
 from backend.can.ingestion import CANIngestion
 
 class SensorIngestionManager:
-    def __init__(self):
+    """
+    Manages live sensor ingestion from OBD-II and CAN.
+    Provides a queue of sensor-data dicts to consuming code.
+    """
+
+    def __init__(self, polling_interval=1.0):
         self.data_queue = Queue()
-        self.obd_ingestion = OBDIngestion(self.data_queue)
-        self.can_ingestion = CANIngestion(self.data_queue)
+        self.logger = logging.getLogger(__name__)
+
+        # initialize ingestion modules
+        self.obd_ingester = OBDIngestion(self.data_queue, polling_interval)
+        self.can_ingester = CANIngestion(self.data_queue, polling_interval / 10)
 
     def start_all(self):
-        self.obd_ingestion.start()
-        self.can_ingestion.start()
+        """
+        Start both OBD and CAN ingestion threads.
+        """
+        self.logger.info("Starting OBD ingestion...")
+        self.obd_ingester.start()
+        self.logger.info("Starting CAN ingestion...")
+        self.can_ingester.start()
 
     def stop_all(self):
-        self.obd_ingestion.stop()
-        self.can_ingestion.stop()
+        """
+        Stop ingestion threads gracefully.
+        """
+        self.logger.info("Stopping OBD ingestion...")
+        self.obd_ingester.stop()
+        self.logger.info("Stopping CAN ingestion...")
+        self.can_ingester.stop()
 
-    def run(self, duration_seconds=60):
-        self.start_all()
-        start_time = time.time()
+    def get_latest(self):
+        """
+        Retrieve the most recent sensor data dict from the queue.
+        Non-blocking. Returns None if no new data.
+        """
         try:
-            while time.time() - start_time < duration_seconds:
-                while not self.data_queue.empty():
-                    sensor_data = self.data_queue.get()
-                    print("Received sensor data:", sensor_data)
-                time.sleep(0.1)
-        finally:
-            self.stop_all()
-
-if __name__ == "__main__":
-    manager = SensorIngestionManager()
-    manager.run()
+            # drain entire queue, but return only last
+            latest = None
+            while True:
+                latest = self.data_queue.get_nowait()
+        except Exception:
+            return latest
