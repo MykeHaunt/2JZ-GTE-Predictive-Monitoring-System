@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2JZ-GTE Predictive Monitoring Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-dark text-light">
+
+<div class="container mt-5">
+  <h1 class="text-center">2JZ-GTE Turbo Failure Prediction</h1>
+  <hr>
+  <form id="predict-form" class="row g-3">
+    <div class="col-md-4">
+      <label for="rpm" class="form-label">RPM</label>
+      <input type="number" class="form-control" id="rpm" name="rpm" required>
+    </div>
+    <div class="col-md-4">
+      <label for="map" class="form-label">MAP (kPa)</label>
+      <input type="number" class="form-control" id="map" name="map" required>
+    </div>
+    <div class="col-md-4">
+      <label for="tps" class="form-label">TPS (%)</label>
+      <input type="number" class="form-control" id="tps" name="tps" required>
+    </div>
+    <div class="col-md-4">
+      <label for="coolant" class="form-label">Coolant Temp (°C)</label>
+      <input type="number" class="form-control" id="coolant" name="coolant" required>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-warning">Predict</button>
+    </div>
+  </form>
+
+  <div class="mt-4" id="result"></div>
+</div>
+
+<script>
+document.getElementById('predict-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const data = {
+    rpm: +document.getElementById('rpm').value,
+    map: +document.getElementById('map').value,
+    tps: +document.getElementById('tps').value,
+    coolant: +document.getElementById('coolant').value
+  };
+  const res = await fetch('http://localhost:5000/predict', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  const json = await res.json();
+  document.getElementById('result').innerHTML = `<h4>Prediction: ${json.status}</h4>`;
+});
+</script>
+
+</body>
+</html>
