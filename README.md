@@ -5,7 +5,6 @@
 [![Docker Ready](https://img.shields.io/badge/docker-ready-blue)]()
 [![Platform](https://img.shields.io/badge/platform-cross--platform-lightgrey)]()
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)]()
-[![Status](https://img.shields.io/badge-status-active-success)]()
 
 ---
 
@@ -299,8 +298,13 @@ Recommended for:
 ---
 
 ## 👨‍💻 Author
-
-H. Pandit  
+#H. Pandit
+Race Engine Fabricator | Automotive Diagnostics Educator | Embedded System Software Developer   
 Dhaka, Bangladesh  
-Race Engine Fabricator | Automotive Diagnostics Educator | Software Developer  
 GitHub: MykeHaunt
+
+## 🖥️ Dash Preview:
+
+
+https://github.com/user-attachments/assets/7dee56ea-8c47-493c-b597-c5cf7dd600e1
+
