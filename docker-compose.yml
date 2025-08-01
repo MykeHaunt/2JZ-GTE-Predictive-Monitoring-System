@@ -1,14 +1,12 @@
 version: '3.8'
 
 services:
-  2jz-monitor:
+  monitoring_backend:
     build: .
-    container_name: 2jz_monitor
+    container_name: 2jz-monitoring-backend
     ports:
-      - "8000:8000"
-    environment:
-      - ENV_MODE=production
+      - "5000:5000"
     volumes:
-      - ./data:/app/data
       - ./logs:/app/logs
+      - ./backend:/app/backend
     restart: unless-stopped
