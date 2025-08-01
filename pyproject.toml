@@ -1,3 +1,30 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "2jzgte_predictive_monitoring"
+version = "0.1.0"
+description = "Predictive engine fault monitoring for the 2JZ-GTE platform"
+readme = "README.md"
+authors = [
+    { name="H. Pandit", email="mykehaunt@protonmail.com" }
+]
+license = { text = "GPL-3.0-or-later" }
+dependencies = [
+    "flask>=2.2",
+    "pandas",
+    "numpy",
+    "scikit-learn",
+    "matplotlib",
+    "seaborn",
+    "joblib",
+    "gunicorn",
+    "python-dotenv"
+]
+requires-python = ">=3.8"
+keywords = ["2jz", "engine monitoring", "predictive maintenance", "flask", "canbus"]
+
+[project.urls]
+"Source Code" = "https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System"
+"Documentation" = "https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/wiki"
