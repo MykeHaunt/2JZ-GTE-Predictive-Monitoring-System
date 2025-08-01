@@ -1,41 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>2JZ-GTE Predictive Monitoring System</title>
-  <link rel="stylesheet" href="css/styles.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>2JZ-GTE Predictive Monitoring</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/styles.css"/>
 </head>
 <body>
-  <div class="container">
-    <header class="text-center">
-      <h1>2JZ-GTE Predictive Monitoring</h1>
-      <p class="subtitle">Live Engine Health Dashboard</p>
-    </header>
+    <div class="container py-4">
+        <div class="text-center mb-4">
+            <img src="assets/logo.png" alt="2JZ Logo" width="80">
+            <h1 class="mt-3">2JZ-GTE Predictive Monitoring System</h1>
+            <p class="text-muted">Developed by H. Pandit</p>
+        </div>
 
-    <section id="status-bar" class="status-bar">
-      <div class="status-indicator" id="obd-status">OBD: <span class="status unknown">Unknown</span></div>
-      <div class="status-indicator" id="can-status">CAN Bus: <span class="status unknown">Unknown</span></div>
-      <div class="status-indicator" id="model-status">Model: <span class="status unknown">Unknown</span></div>
-    </section>
+        <div class="row mb-4">
+            <div class="col-6 col-md-3">
+                <div class="status-box" id="obd-status">OBD: <span class="badge bg-secondary">Checking...</span></div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="status-box" id="can-status">CAN: <span class="badge bg-secondary">Checking...</span></div>
+            </div>
+        </div>
 
-    <section class="prediction-section">
-      <div id="result" class="alert alert-info" style="display:none;">
-        <strong id="prediction-text">Awaiting prediction...</strong>
-      </div>
-    </section>
+        <form id="sensor-form" class="row g-3">
+            <div class="col-md-4 col-sm-6">
+                <label for="rpm" class="form-label">RPM</label>
+                <input type="number" class="form-control" id="rpm" required>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <label for="boost" class="form-label">Boost (psi)</label>
+                <input type="number" class="form-control" id="boost" required>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <label for="afr" class="form-label">AFR</label>
+                <input type="number" class="form-control" id="afr" required>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <label for="oil_temp" class="form-label">Oil Temp (°C)</label>
+                <input type="number" class="form-control" id="oil_temp" required>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <label for="coolant_temp" class="form-label">Coolant Temp (°C)</label>
+                <input type="number" class="form-control" id="coolant_temp" required>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <label for="knock" class="form-label">Knock Level</label>
+                <input type="number" class="form-control" id="knock" required>
+            </div>
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary w-50">Predict Engine Status</button>
+            </div>
+        </form>
 
-    <section class="chart-section">
-      <canvas id="sensorChart"></canvas>
-    </section>
+        <div class="mt-4" id="result" style="display:none;">
+            <h4>Prediction Result</h4>
+            <p class="alert alert-info" id="prediction-text"></p>
+        </div>
 
-    <footer class="text-center">
-      <p>&copy; 2025 H. Pandit – Predictive Monitoring System for 2JZ-GTE</p>
-    </footer>
-  </div>
+        <div class="mt-5">
+            <canvas id="sensorChart" height="100"></canvas>
+        </div>
+    </div>
 
-  <script src="js/chart-config.js"></script>
-  <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/chart-config.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
