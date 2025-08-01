@@ -1,30 +1,17 @@
-from flask import Flask, request, jsonify
-import pandas as pd
-import joblib
-import logging
-from datetime import datetime
+from flask import Flask
+from routes import api_blueprint
+from logger import setup_logger
+import config
 
 app = Flask(__name__)
-model = joblib.load('model.pkl')
+app.config.from_object(config.Config)
 
-logging.basicConfig(filename='logs/api.log', level=logging.INFO)
+# Setup logger
+logger = setup_logger()
 
-@app.route('/')
-def home():
-    return jsonify({"message": "2JZ-GTE Predictive Monitoring API v1.0"}), 200
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    try:
-        data = request.get_json()
-        df = pd.DataFrame([data])
-        prediction = model.predict(df)[0]
-        status = 'Potential Failure' if prediction else 'Normal'
-        logging.info(f"{datetime.now()} | Prediction: {status} | Input: {data}")
-        return jsonify({'status': status}), 200
-    except Exception as e:
-        logging.error(f"{datetime.now()} | Error: {str(e)}")
-        return jsonify({'error': str(e)}), 500
+# Register API routes
+app.register_blueprint(api_blueprint, url_prefix="/api")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    logger.info("Starting 2JZ-GTE Predictive Monitoring API...")
+    app.run(debug=True, host='0.0.0.0', port=5000)
