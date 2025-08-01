@@ -2,49 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>2JZ-GTE Predictive Monitoring</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
     <div class="container py-5">
         <div class="text-center mb-4">
-            <img src="assets/logo.png" alt="2JZ Logo" width="80">
+            <img src="assets/logo.png" alt="2JZ Logo" width="80" />
             <h1 class="mt-3">2JZ-GTE Predictive Monitoring System</h1>
             <p class="text-muted">Developed by H. Pandit</p>
         </div>
 
-        <form id="sensor-form" class="row g-3" novalidate>
+        <!-- System Status Display -->
+        <div class="mb-4">
+            <h5>System Status</h5>
+            <ul class="list-group" id="system-status-list">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    OBD Connected
+                    <span id="obd-status" class="badge bg-secondary">Checking...</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    CAN Active
+                    <span id="can-status" class="badge bg-secondary">Checking...</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Sensor Ingestion
+                    <span id="ingestion-status" class="badge bg-secondary">Checking...</span>
+                </li>
+            </ul>
+        </div>
+
+        <form id="sensor-form" class="row g-3">
             <div class="col-md-4">
                 <label for="rpm" class="form-label">RPM</label>
-                <input type="number" class="form-control" id="rpm" required min="0" step="1" aria-describedby="rpmHelp" />
-                <div id="rpmHelp" class="form-text">Engine revolutions per minute (≥ 0)</div>
+                <input type="number" class="form-control" id="rpm" required />
             </div>
             <div class="col-md-4">
                 <label for="boost" class="form-label">Boost (psi)</label>
-                <input type="number" class="form-control" id="boost" required min="-10" step="0.1" aria-describedby="boostHelp" />
-                <div id="boostHelp" class="form-text">Turbo boost pressure in psi</div>
+                <input type="number" class="form-control" id="boost" required />
             </div>
             <div class="col-md-4">
                 <label for="afr" class="form-label">AFR</label>
-                <input type="number" class="form-control" id="afr" required min="0" step="0.1" aria-describedby="afrHelp" />
-                <div id="afrHelp" class="form-text">Air-fuel ratio</div>
+                <input type="number" class="form-control" id="afr" required />
             </div>
             <div class="col-md-4">
                 <label for="oil_temp" class="form-label">Oil Temp (°C)</label>
-                <input type="number" class="form-control" id="oil_temp" required min="-40" max="150" step="0.1" aria-describedby="oilTempHelp" />
-                <div id="oilTempHelp" class="form-text">Oil temperature in Celsius</div>
+                <input type="number" class="form-control" id="oil_temp" required />
             </div>
             <div class="col-md-4">
                 <label for="coolant_temp" class="form-label">Coolant Temp (°C)</label>
-                <input type="number" class="form-control" id="coolant_temp" required min="-40" max="150" step="0.1" aria-describedby="coolantTempHelp" />
-                <div id="coolantTempHelp" class="form-text">Coolant temperature in Celsius</div>
+                <input type="number" class="form-control" id="coolant_temp" required />
             </div>
             <div class="col-md-4">
                 <label for="knock" class="form-label">Knock Level</label>
-                <input type="number" class="form-control" id="knock" required min="0" max="10" step="1" aria-describedby="knockHelp" />
-                <div id="knockHelp" class="form-text">Engine knock intensity (0–10 scale)</div>
+                <input type="number" class="form-control" id="knock" required />
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Predict Engine Status</button>
@@ -53,30 +66,11 @@
 
         <div class="mt-4" id="result" style="display:none;">
             <h4>Prediction Result</h4>
-            <p class="alert alert-info" id="prediction-text" role="alert"></p>
+            <p class="alert alert-info" id="prediction-text"></p>
         </div>
 
         <div class="mt-5">
-            <canvas id="sensorChart" height="100" aria-label="Sensor data chart" role="img"></canvas>
-        </div>
-
-        <!-- System Status Section -->
-        <div class="mt-5" id="system-status-section" aria-live="polite" aria-atomic="true" aria-relevant="all">
-            <h4>System Status</h4>
-            <ul class="list-group" id="system-status-list">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    OBD Connection
-                    <span id="obd-status" class="badge rounded-pill bg-secondary">Loading...</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    CAN Bus
-                    <span id="can-status" class="badge rounded-pill bg-secondary">Loading...</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Sensor Ingestion
-                    <span id="sensor-ingestion-status" class="badge rounded-pill bg-secondary">Loading...</span>
-                </li>
-            </ul>
+            <canvas id="sensorChart" height="100"></canvas>
         </div>
     </div>
 
