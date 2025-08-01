@@ -1,1 +1,16 @@
-# (Empty placeholder or additional conda config)
+name: 2jzgte-predictive
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.9
+  - flask
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - joblib
+  - pip
+  - pip:
+      - python-dotenv
