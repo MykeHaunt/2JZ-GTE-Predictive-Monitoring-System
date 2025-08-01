@@ -1,83 +1,71 @@
-import logging
-import numpy as np
-import pandas as pd
 import joblib
-from backend.config import Config
-
-logger = logging.getLogger(__name__)
+import numpy as np
+import logging
+from config import Config
 
 class Predictor:
-    def __init__(self, model_path=Config.MODEL_PATH):
+    def __init__(self, model_path=None):
         """
-        Load the pre-trained predictive model.
-
-        :param model_path: Path to the serialized model file
+        Loads the pre-trained model from the specified path.
         """
+        self.model_path = model_path or Config.MODEL_PATH
         try:
-            self.model = joblib.load(model_path)
-            logger.info(f"Loaded model from {model_path}")
+            self.model = joblib.load(self.model_path)
+            logging.info(f"Model loaded from {self.model_path}")
         except Exception as e:
-            logger.error(f"Failed to load model from {model_path}: {e}")
-            raise e
-
-    def preprocess(self, sensor_data: dict) -> np.ndarray:
-        """
-        Preprocess raw sensor data dictionary to model input feature vector.
-
-        :param sensor_data: Dictionary of sensor readings, e.g.,
-            {
-                'rpm': 3500,
-                'throttle_pos': 45.6,
-                'engine_temp': 90.1,
-                ...
-            }
-        :return: numpy array of features aligned with the model's expected input shape
-        """
-        # Define feature order consistent with training
-        feature_order = ['rpm', 'throttle_pos', 'engine_temp', 'maf']
-
-        # Extract features in order, use 0 or NaN for missing features
-        features = []
-        for feat in feature_order:
-            val = sensor_data.get(feat, np.nan)
-            features.append(val)
-        features_array = np.array(features, dtype=np.float32)
-
-        # Example: fill missing values with mean or zero
-        features_array = np.nan_to_num(features_array, nan=0.0)
-
-        logger.debug(f"Preprocessed features: {features_array}")
-        return features_array.reshape(1, -1)  # Model expects 2D input
+            logging.error(f"Failed to load model from {self.model_path}: {e}")
+            self.model = None
 
     def predict(self, sensor_data: dict) -> dict:
         """
-        Perform prediction on live sensor data.
+        Predicts engine health from sensor input dictionary.
 
-        :param sensor_data: Raw sensor data dict
-        :return: Prediction dict, e.g., {'failure_probability': 0.75, 'alert': True}
+        Args:
+            sensor_data (dict): {
+                "rpm": int,
+                "boost": float,
+                "afr": float,
+                "oil_temp": float,
+                "coolant_temp": float,
+                "knock": float
+            }
+
+        Returns:
+            dict: {
+                "prediction": str,
+                "confidence": float
+            }
         """
-        features = self.preprocess(sensor_data)
+        if self.model is None:
+            return {"error": "Model not loaded"}
 
-        # Predict probability or regression value
         try:
-            prob = self.model.predict_proba(features)[:, 1][0]
-            alert = prob > 0.7  # Threshold for alert, adjustable
-            result = {
-                'failure_probability': float(prob),
-                'alert': alert
+            features = self._extract_features(sensor_data)
+            proba = self.model.predict_proba([features])[0]
+            label = self.model.predict([features])[0]
+
+            return {
+                "prediction": str(label),
+                "confidence": round(float(np.max(proba)), 4)
             }
-            logger.info(f"Prediction result: {result}")
-            return result
-        except AttributeError:
-            # Model does not support predict_proba (e.g., regression)
-            val = self.model.predict(features)[0]
-            alert = val > 0.7
-            result = {
-                'prediction_value': float(val),
-                'alert': alert
-            }
-            logger.info(f"Regression prediction result: {result}")
-            return result
+
         except Exception as e:
-            logger.error(f"Prediction failed: {e}")
-            return {'error': str(e)}
+            logging.error(f"Prediction failed: {e}")
+            return {"error": "Prediction error"}
+
+    def _extract_features(self, data: dict) -> list:
+        """
+        Converts raw input dict to model-compatible feature list.
+
+        Returns:
+            list: [rpm, boost, afr, oil_temp, coolant_temp, knock]
+        """
+        keys = ["rpm", "boost", "afr", "oil_temp", "coolant_temp", "knock"]
+        try:
+            return [float(data[key]) for key in keys]
+        except KeyError as ke:
+            logging.error(f"Missing key in sensor data: {ke}")
+            raise
+        except ValueError as ve:
+            logging.error(f"Invalid data format in sensor data: {ve}")
+            raise
