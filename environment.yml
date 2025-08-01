@@ -1,18 +1,12 @@
 name: 2jz-monitoring
 channels:
-  - conda-forge
   - defaults
-
 dependencies:
   - python=3.10
-  - pip
-  - numpy
-  - pandas
-  - matplotlib
-  - scikit-learn
   - flask
-  - requests
+  - pandas
+  - joblib
+  - scikit-learn
+  - gunicorn
   - pip:
-    - obd
-    - tensorflow
-    - pyserial
+      - flask-cors
