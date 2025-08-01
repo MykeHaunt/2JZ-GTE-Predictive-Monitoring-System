@@ -1,17 +1,21 @@
-from flask import Flask
-from routes import api_blueprint
-from logger import setup_logger
-import config
+from flask import Flask, request, jsonify
+from model_handler import load_model, predict_engine_status
+from utils.preprocessing import preprocess_input
 
 app = Flask(__name__)
-app.config.from_object(config.Config)
 
-# Setup logger
-logger = setup_logger()
+# Load model at startup
+model = load_model("model.pkl")
 
-# Register API routes
-app.register_blueprint(api_blueprint, url_prefix="/api")
+@app.route("/api/predict", methods=["POST"])
+def predict():
+    try:
+        input_data = request.get_json()
+        processed = preprocess_input(input_data)
+        prediction = predict_engine_status(model, processed)
+        return jsonify({"prediction": prediction})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    logger.info("Starting 2JZ-GTE Predictive Monitoring API...")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(host="0.0.0.0", port=5000)
