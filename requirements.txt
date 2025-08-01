@@ -1,9 +1,9 @@
-flask
-numpy
+flask>=2.2
 pandas
-matplotlib
+numpy
 scikit-learn
-requests
-obd
-tensorflow
-pyserial
+matplotlib
+seaborn
+joblib
+gunicorn
+python-dotenv
