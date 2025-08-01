@@ -1,12 +1,13 @@
 import joblib
-import config
-import os
+import numpy as np
 
-class ModelHandler:
-    def __init__(self, model_path=config.Config.MODEL_PATH):
-        if not os.path.exists(model_path):
-            raise FileNotFoundError(f"Model file not found: {model_path}")
-        self.model = joblib.load(model_path)
+def load_model(path: str):
+    try:
+        model = joblib.load(path)
+        return model
+    except FileNotFoundError:
+        raise RuntimeError(f"Model file not found at: {path}")
 
-    def predict(self, features):
-        return self.model.predict([features])[0]
+def predict_engine_status(model, features: np.ndarray) -> str:
+    result = model.predict(features.reshape(1, -1))[0]
+    return "FAILURE LIKELY" if result == 1 else "NORMAL"
