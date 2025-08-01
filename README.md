@@ -151,9 +151,18 @@ Open your browser at: [http://localhost:8000](http://localhost:8000)
 
 ---
 
-## 📄 License
+### 📄 License
 
-Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for full terms.
+This software is released under the **MIT License**.
+
+You are permitted to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, subject to the following conditions:
+
+- The original copyright notice and permission notice must be included.
+- The Software is provided “as is”, without warranty of any kind—explicit or implied.
+
+> The full text of the license is available in the [LICENSE](https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/blob/main/LICENSE) file.
+
+This license enables maximum reuse with minimal restriction—ideal for academic, personal, or commercial applications.
 
 ---
 
