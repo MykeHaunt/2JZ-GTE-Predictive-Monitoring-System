@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  2jz-monitor:
+    build: .
+    container_name: 2jz_monitor
+    ports:
+      - "8000:8000"
+    environment:
+      - ENV_MODE=production
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
