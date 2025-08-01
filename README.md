@@ -160,7 +160,7 @@ Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for full terms
 ## 👤 Author
 
 **H. Pandit**  
-Professor of Mathematics & Physics | Dhaka, Bangladesh  
+Embedded Systems Engineer | Dhaka, Bangladesh  
 Automotive electronics specialist | Turbo system diagnostic researcher  
 GitHub: [MykeHaunt](https://github.com/MykeHaunt)
 
