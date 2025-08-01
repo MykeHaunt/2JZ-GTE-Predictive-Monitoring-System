@@ -1,17 +1,150 @@
+/* frontend/css/styles.css */
+
+/* General body and container styling */
 body {
     background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #212529;
+    margin: 0;
+    padding: 0;
 }
 
-.status-box {
-    font-weight: bold;
-    font-size: 0.95rem;
+.container {
+    max-width: 960px;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Header */
+.text-center img {
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #343a40;
+}
+
+/* Form Styling */
+form#sensor-form {
+    margin-top: 1.5rem;
+}
+
+form#sensor-form .form-label {
+    font-weight: 600;
+}
+
+form#sensor-form input[type=number] {
+    height: 45px;
+    font-size: 1rem;
+}
+
+/* Button Styling */
+button.btn-primary {
+    width: 100%;
+    font-weight: 600;
+    padding: 0.6rem;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button.btn-primary:hover {
+    background-color: #004085;
+}
+
+/* Prediction Result Styling */
+#result {
+    margin-top: 1.5rem;
+}
+
+#prediction-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+/* Chart Container */
+#sensorChart {
+    width: 100% !important;
+    max-height: 300px;
+}
+
+/* Component Status Display */
+.status-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    color: white;
+    user-select: none;
+    min-width: 140px;
+    justify-content: center;
+}
+
+.status-indicator.connected {
+    background-color: #198754; /* Bootstrap green */
+    box-shadow: 0 0 8px rgba(25, 135, 84, 0.6);
+}
+
+.status-indicator.disconnected {
+    background-color: #dc3545; /* Bootstrap red */
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.6);
+}
+
+/* Responsive Design */
+
+/* Smaller devices (phones) */
 @media (max-width: 576px) {
     h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
-    .btn {
-        width: 100% !important;
+
+    .container {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    form#sensor-form .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    button.btn-primary {
+        font-size: 1rem;
+    }
+
+    .status-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 577px) and (max-width: 768px) {
+    form#sensor-form .col-md-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* Large devices (desktops) */
+@media (min-width: 769px) {
+    form#sensor-form .col-md-4 {
+        flex: 0 0 33.3333%;
+        max-width: 33.3333%;
     }
 }
