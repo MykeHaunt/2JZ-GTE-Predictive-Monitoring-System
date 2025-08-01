@@ -1,0 +1,9 @@
+flask>=2.2
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+joblib
+gunicorn
+python-dotenv
