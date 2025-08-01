@@ -1,11 +1,17 @@
 body {
-    background-color: #f5f5f5;
+    background-color: #f8f9fa;
 }
 
-h1 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-#result p {
+.status-box {
     font-weight: bold;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    .btn {
+        width: 100% !important;
+    }
 }
