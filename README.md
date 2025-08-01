@@ -160,8 +160,8 @@ Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for full terms
 ## 👤 Author
 
 **H. Pandit**  
-Embedded Systems Engineer | Dhaka, Bangladesh  
-Automotive electronics specialist | Turbo system diagnostic researcher  
+Embedded Systems Developer | Dhaka, Bangladesh  
+Automotive Electronics Specialist | Turbo System Diagnostic Researcher  
 GitHub: [MykeHaunt](https://github.com/MykeHaunt)
 
 ---
