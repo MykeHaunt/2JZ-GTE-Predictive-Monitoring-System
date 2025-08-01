@@ -10,7 +10,7 @@
 ---
 
 **WORK IN PROGRESS: H. PANDIT**  
-Race Engine Fabricator | Automotive Diagnostics Educator | Software Developer   
+Race Engine Fabricator | Automotive Diagnostics Educator | Embedded System Software Developer   
 Dhaka, Bangladesh  
 GitHub: [MykeHaunt](https://github.com/MykeHaunt)
 
