@@ -1,140 +1,190 @@
-// frontend/js/main.js
+// main.js
 
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('sensor-form');
-  const predictionText = document.getElementById('prediction-text');
-  const resultDiv = document.getElementById('result');
-
-  // Status indicators elements (create them dynamically or assume present in HTML)
-  // Let's assume you have a div with id="status-container" for these:
-  const statusContainer = document.createElement('div');
-  statusContainer.className = 'status-container';
-  document.querySelector('.container').insertBefore(statusContainer, form);
-
-  // Create status indicators for OBD and CAN
-  const obdStatus = createStatusIndicator('OBD');
-  const canStatus = createStatusIndicator('CAN');
-
-  statusContainer.appendChild(obdStatus.element);
-  statusContainer.appendChild(canStatus.element);
-
-  // Chart setup using Chart.js (assuming chartConfig is defined in chart-config.js)
-  const ctx = document.getElementById('sensorChart').getContext('2d');
-  const sensorChart = new Chart(ctx, chartConfig);
-
-  // Function to create a status indicator
-  function createStatusIndicator(name) {
-    const div = document.createElement('div');
-    div.className = 'status-indicator disconnected'; // Default disconnected
-    div.textContent = `${name}: Disconnected`;
-    return { element: div, setConnected: (connected) => {
-      if (connected) {
-        div.classList.remove('disconnected');
-        div.classList.add('connected');
-        div.textContent = `${name}: Connected`;
-      } else {
-        div.classList.remove('connected');
-        div.classList.add('disconnected');
-        div.textContent = `${name}: Disconnected`;
-      }
-    }};
-  }
-
-  // Simulated or real-time update of connection statuses from backend
-  async function updateComponentStatus() {
-    try {
-      // Call backend health or status endpoint for real status
-      const response = await fetch('/health');
-      if (response.ok) {
-        // For demonstration, toggle statuses randomly (replace with real data)
-        const obdConnected = Math.random() > 0.2;  // 80% chance connected
-        const canConnected = Math.random() > 0.3;  // 70% chance connected
-        obdStatus.setConnected(obdConnected);
-        canStatus.setConnected(canConnected);
-      } else {
-        obdStatus.setConnected(false);
-        canStatus.setConnected(false);
-      }
-    } catch (error) {
-      obdStatus.setConnected(false);
-      canStatus.setConnected(false);
-    }
-  }
-
-  // Initial status update
-  updateComponentStatus();
-
-  // Periodically refresh status every 5 seconds
-  setInterval(updateComponentStatus, 5000);
-
-  // Handle sensor form submission for prediction
-  form.addEventListener('submit', async (event) => {
+// Existing sensor form submission and prediction logic
+document.getElementById('sensor-form').addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    // Collect sensor inputs
-    const sensorData = {
-      rpm: Number(document.getElementById('rpm').value),
-      boost: Number(document.getElementById('boost').value),
-      afr: Number(document.getElementById('afr').value),
-      oil_temp: Number(document.getElementById('oil_temp').value),
-      coolant_temp: Number(document.getElementById('coolant_temp').value),
-      knock: Number(document.getElementById('knock').value),
-    };
+    // Gather input values with validation
+    const rpm = Number(document.getElementById('rpm').value);
+    const boost = Number(document.getElementById('boost').value);
+    const afr = Number(document.getElementById('afr').value);
+    const oil_temp = Number(document.getElementById('oil_temp').value);
+    const coolant_temp = Number(document.getElementById('coolant_temp').value);
+    const knock = Number(document.getElementById('knock').value);
+
+    // Basic input validation (can be expanded)
+    if (
+        isNaN(rpm) || rpm < 0 ||
+        isNaN(boost) ||
+        isNaN(afr) || afr <= 0 ||
+        isNaN(oil_temp) || oil_temp < -40 || oil_temp > 150 ||
+        isNaN(coolant_temp) || coolant_temp < -40 || coolant_temp > 150 ||
+        isNaN(knock) || knock < 0 || knock > 10
+    ) {
+        alert('Please enter valid sensor data within allowed ranges.');
+        return;
+    }
+
+    const sensorData = { rpm, boost, afr, oil_temp, coolant_temp, knock };
 
     try {
-      const response = await fetch('/api/update', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sensor_data: sensorData }),
-      });
+        const response = await fetch('/api/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sensor_data: sensorData }),
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to update sensor data');
-      }
-
-      // Get prediction
-      const predResponse = await fetch('/api/prediction');
-      if (!predResponse.ok) {
-        throw new Error('Failed to fetch prediction');
-      }
-
-      const predJson = await predResponse.json();
-
-      predictionText.textContent = `Prediction: ${predJson.status} (Confidence: ${(predJson.confidence * 100).toFixed(2)}%)`;
-      resultDiv.style.display = 'block';
-
-      // Update chart with new sensor values
-      updateChart(sensorChart, sensorData);
-
-    } catch (error) {
-      predictionText.textContent = `Error: ${error.message}`;
-      resultDiv.style.display = 'block';
-    }
-  });
-
-  // Function to update Chart.js with new data
-  function updateChart(chart, sensorData) {
-    if (!chart) return;
-
-    // Example: Update datasets with new sensor data points
-    // Assuming your chartConfig datasets have labels matching sensor keys
-    Object.entries(sensorData).forEach(([key, value]) => {
-      const dataset = chart.data.datasets.find(ds => ds.label.toLowerCase() === key.toLowerCase());
-      if (dataset) {
-        dataset.data.push(value);
-        // Limit to last 20 points
-        if (dataset.data.length > 20) {
-          dataset.data.shift();
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-      }
-    });
 
-    // Add new label (timestamp)
-    chart.data.labels.push(new Date().toLocaleTimeString());
-    if (chart.data.labels.length > 20) {
-      chart.data.labels.shift();
+        const result = await response.json();
+        if (result.status === 'updated') {
+            // Fetch the latest prediction
+            const predResponse = await fetch('/api/prediction');
+            if (predResponse.ok) {
+                const predData = await predResponse.json();
+                displayPrediction(predData);
+                addDataToChart(sensorData);
+            }
+        }
+    } catch (error) {
+        console.error('Error submitting sensor data:', error);
+        alert('Failed to submit sensor data. Please try again.');
     }
-
-    chart.update();
-  }
 });
+
+function displayPrediction(prediction) {
+    const resultDiv = document.getElementById('result');
+    const predictionText = document.getElementById('prediction-text');
+    predictionText.textContent = prediction.message || 'No prediction message.';
+    resultDiv.style.display = 'block';
+}
+
+// Chart.js setup (basic example)
+const ctx = document.getElementById('sensorChart').getContext('2d');
+const sensorChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [], // time or count
+        datasets: [
+            {
+                label: 'RPM',
+                data: [],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                fill: false,
+                tension: 0.1,
+            },
+            {
+                label: 'Boost (psi)',
+                data: [],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                fill: false,
+                tension: 0.1,
+            },
+            {
+                label: 'AFR',
+                data: [],
+                borderColor: 'rgba(255, 206, 86, 1)',
+                fill: false,
+                tension: 0.1,
+            },
+            {
+                label: 'Oil Temp (°C)',
+                data: [],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false,
+                tension: 0.1,
+            },
+            {
+                label: 'Coolant Temp (°C)',
+                data: [],
+                borderColor: 'rgba(153, 102, 255, 1)',
+                fill: false,
+                tension: 0.1,
+            },
+            {
+                label: 'Knock Level',
+                data: [],
+                borderColor: 'rgba(255, 159, 64, 1)',
+                fill: false,
+                tension: 0.1,
+            },
+        ],
+    },
+    options: {
+        responsive: true,
+        animation: false,
+        scales: {
+            x: {
+                title: { display: true, text: 'Sample Count' },
+            },
+            y: {
+                beginAtZero: true,
+            },
+        },
+    },
+});
+
+let sampleCount = 0;
+
+function addDataToChart(sensorData) {
+    sampleCount++;
+    sensorChart.data.labels.push(sampleCount.toString());
+    sensorChart.data.datasets[0].data.push(sensorData.rpm);
+    sensorChart.data.datasets[1].data.push(sensorData.boost);
+    sensorChart.data.datasets[2].data.push(sensorData.afr);
+    sensorChart.data.datasets[3].data.push(sensorData.oil_temp);
+    sensorChart.data.datasets[4].data.push(sensorData.coolant_temp);
+    sensorChart.data.datasets[5].data.push(sensorData.knock);
+
+    // Limit data points to last 20 samples for readability
+    if (sensorChart.data.labels.length > 20) {
+        sensorChart.data.labels.shift();
+        sensorChart.data.datasets.forEach(dataset => dataset.data.shift());
+    }
+    sensorChart.update();
+}
+
+// --- System Status Section ---
+
+// Function to fetch and update system status badges
+async function updateSystemStatus() {
+    try {
+        const response = await fetch('/api/monitor_status');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const statusData = await response.json();
+
+        function updateBadge(id, isActive) {
+            const badge = document.getElementById(id);
+            if (!badge) return;
+            if (isActive === true) {
+                badge.textContent = 'Connected';
+                badge.className = 'badge rounded-pill bg-success';
+            } else if (isActive === false) {
+                badge.textContent = 'Disconnected';
+                badge.className = 'badge rounded-pill bg-danger';
+            } else {
+                badge.textContent = 'Unknown';
+                badge.className = 'badge rounded-pill bg-secondary';
+            }
+        }
+
+        updateBadge('obd-status', statusData.obd_connected);
+        updateBadge('can-status', statusData.can_active);
+        updateBadge('sensor-ingestion-status', statusData.sensor_ingestion_active);
+    } catch (error) {
+        console.error('Failed to fetch system status:', error);
+        ['obd-status', 'can-status', 'sensor-ingestion-status'].forEach(id => {
+            const badge = document.getElementById(id);
+            if (badge) {
+                badge.textContent = 'Error';
+                badge.className = 'badge rounded-pill bg-danger';
+            }
+        });
+    }
+}
+
+// Initial call and polling every 5 seconds
+updateSystemStatus();
+setInterval(updateSystemStatus, 5000);
