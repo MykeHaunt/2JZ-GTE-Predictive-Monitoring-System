@@ -175,4 +175,7 @@ GitHub: [MykeHaunt](https://github.com/MykeHaunt)
 
 ---
 
-> *Future improvements will include advanced time-series anomaly detection (LSTM), real-time graphing dashboards, and multivariate failure classification pipelines. Hardware compatibility with CAN transceivers and RP2040 microcontrollers is under active development.*
+### **PREVIEW**
+
+
+https://github.com/user-attachments/assets/b72c7b9a-549e-44c3-93cd-83f42ec2053c
