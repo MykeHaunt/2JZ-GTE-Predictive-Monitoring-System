@@ -1,37 +1,77 @@
 // frontend/js/main.js
 
-document.getElementById("sensor-form").addEventListener("submit", async function (e) {
-    e.preventDefault();
+// Fetch intervals (ms)
+const POLL_INTERVAL = 1000;
 
-    const payload = {
-        rpm: parseInt(document.getElementById("rpm").value),
-        boost: parseFloat(document.getElementById("boost").value),
-        afr: parseFloat(document.getElementById("afr").value),
-        oil_temp: parseFloat(document.getElementById("oil_temp").value),
-        coolant_temp: parseFloat(document.getElementById("coolant_temp").value),
-        knock: parseFloat(document.getElementById("knock").value)
-    };
+// Chart instance (defined in chart-config.js)
+let sensorChart = null;
 
-    try {
-        const res = await fetch("http://localhost:5000/predict", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        });
-
-        const data = await res.json();
-        const resultDiv = document.getElementById("result");
-        const predText = document.getElementById("prediction-text");
-
-        if (res.ok) {
-            predText.textContent = `Prediction: ${data.prediction} (Confidence: ${(data.confidence * 100).toFixed(2)}%)`;
-        } else {
-            predText.textContent = `Error: ${data.error}`;
-        }
-
-        resultDiv.style.display = "block";
-    } catch (err) {
-        console.error(err);
-        alert("API request failed. Check server.");
-    }
+// Initialize after DOM load
+document.addEventListener("DOMContentLoaded", () => {
+  sensorChart = createSensorChart();  // from chart-config.js
+  pollData();
 });
+
+// Recursive polling function
+async function pollData() {
+  try {
+    // Fetch latest sensor data
+    const sensorRes = await fetch("/api/sensor_data");
+    const predRes = await fetch("/api/prediction");
+
+    let sensorData = null, prediction = null;
+
+    if (sensorRes.ok) {
+      sensorData = await sensorRes.json();
+      updateChart(sensorData);
+    }
+
+    if (predRes.ok) {
+      prediction = await predRes.json();
+      updatePrediction(prediction);
+    }
+  } catch (err) {
+    console.error("Polling error:", err);
+  } finally {
+    setTimeout(pollData, POLL_INTERVAL);
+  }
+}
+
+// Update textual prediction result
+function updatePrediction(pred) {
+  const resultDiv = document.getElementById("result");
+  const textEl = document.getElementById("prediction-text");
+
+  if (pred.error || pred.message) {
+    textEl.textContent = pred.error || pred.message;
+    textEl.classList.remove("alert-info");
+    textEl.classList.add("alert-danger");
+  } else {
+    textEl.textContent = `Status: ${pred.prediction} (Confidence: ${(pred.confidence * 100).toFixed(1)}%)`;
+    textEl.classList.remove("alert-danger");
+    textEl.classList.add("alert-info");
+  }
+  resultDiv.style.display = "block";
+}
+
+// Push new data point(s) into Chart.js
+function updateChart(data) {
+  if (!sensorChart) return;
+
+  const now = new Date().toLocaleTimeString();
+
+  // Append new labels and data
+  sensorChart.data.labels.push(now);
+  sensorChart.data.datasets.forEach(dataset => {
+    const key = dataset.label.toLowerCase().replace(/\s*\(.*?\)/, "").replace(/\s+/g, "_");
+    dataset.data.push(data[key]);
+  });
+
+  // Keep last 20 points
+  if (sensorChart.data.labels.length > 20) {
+    sensorChart.data.labels.shift();
+    sensorChart.data.datasets.forEach(ds => ds.data.shift());
+  }
+
+  sensorChart.update();
+}
