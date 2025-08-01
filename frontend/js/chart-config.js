@@ -1,29 +1,38 @@
-// frontend/js/chart-config.js
-
-function createSensorChart() {
-  const ctx = document.getElementById("sensorChart").getContext("2d");
-  return new Chart(ctx, {
-    type: "line",
+const ctx = document.getElementById('sensorChart').getContext('2d');
+const sensorChart = new Chart(ctx, {
+    type: 'line',
     data: {
-      labels: [],
-      datasets: [
-        { label: "RPM", data: [], fill: false, tension: 0.1 },
-        { label: "Boost (psi)", data: [], fill: false, tension: 0.1 },
-        { label: "AFR", data: [], fill: false, tension: 0.1 },
-        { label: "Oil Temp (°C)", data: [], fill: false, tension: 0.1 },
-        { label: "Coolant Temp (°C)", data: [], fill: false, tension: 0.1 },
-        { label: "Knock", data: [], fill: false, tension: 0.1 }
-      ]
+        labels: [],
+        datasets: [
+            {
+                label: 'RPM',
+                data: [],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                fill: false
+            },
+            {
+                label: 'Boost (psi)',
+                data: [],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: false
+            },
+            {
+                label: 'Knock Level',
+                data: [],
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 2,
+                fill: false
+            }
+        ]
     },
     options: {
-      responsive: true,
-      plugins: {
-        legend: { position: "top" }
-      },
-      scales: {
-        x: { display: true, title: { display: true, text: "Time" } },
-        y: { beginAtZero: true }
-      }
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
     }
-  });
-}
+});
