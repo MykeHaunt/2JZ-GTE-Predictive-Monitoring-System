@@ -1,1 +1,16 @@
-# (Empty placeholder or conda build config)
+name: 2jzgte-monitoring-pkg
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.9
+  - flask=2.2.*
+  - pandas>=1.3
+  - numpy>=1.21
+  - scikit-learn>=1.1
+  - matplotlib
+  - seaborn
+  - joblib
+  - pip
+  - pip:
+      - python-dotenv>=0.19
