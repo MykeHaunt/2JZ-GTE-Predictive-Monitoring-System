@@ -1,99 +1,140 @@
 // frontend/js/main.js
 
-// Reference to the form and result elements
-const sensorForm = document.getElementById('sensor-form');
-const resultDiv = document.getElementById('result');
-const predictionText = document.getElementById('prediction-text');
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('sensor-form');
+  const predictionText = document.getElementById('prediction-text');
+  const resultDiv = document.getElementById('result');
 
-// Chart.js chart instance - assumed initialized in js/chart-config.js as sensorChart
+  // Status indicators elements (create them dynamically or assume present in HTML)
+  // Let's assume you have a div with id="status-container" for these:
+  const statusContainer = document.createElement('div');
+  statusContainer.className = 'status-container';
+  document.querySelector('.container').insertBefore(statusContainer, form);
 
-// Function to fetch prediction from backend API using form data
-async function fetchPrediction(sensorData) {
+  // Create status indicators for OBD and CAN
+  const obdStatus = createStatusIndicator('OBD');
+  const canStatus = createStatusIndicator('CAN');
+
+  statusContainer.appendChild(obdStatus.element);
+  statusContainer.appendChild(canStatus.element);
+
+  // Chart setup using Chart.js (assuming chartConfig is defined in chart-config.js)
+  const ctx = document.getElementById('sensorChart').getContext('2d');
+  const sensorChart = new Chart(ctx, chartConfig);
+
+  // Function to create a status indicator
+  function createStatusIndicator(name) {
+    const div = document.createElement('div');
+    div.className = 'status-indicator disconnected'; // Default disconnected
+    div.textContent = `${name}: Disconnected`;
+    return { element: div, setConnected: (connected) => {
+      if (connected) {
+        div.classList.remove('disconnected');
+        div.classList.add('connected');
+        div.textContent = `${name}: Connected`;
+      } else {
+        div.classList.remove('connected');
+        div.classList.add('disconnected');
+        div.textContent = `${name}: Disconnected`;
+      }
+    }};
+  }
+
+  // Simulated or real-time update of connection statuses from backend
+  async function updateComponentStatus() {
     try {
-        const response = await fetch('http://localhost:5000/api/update', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sensor_data: sensorData })
-        });
-        if (!response.ok) {
-            throw new Error(`Prediction request failed: ${response.statusText}`);
-        }
-        const data = await response.json();
-
-        // After successful update, fetch latest prediction
-        const predResponse = await fetch('http://localhost:5000/api/prediction');
-        if (!predResponse.ok) {
-            throw new Error('Failed to fetch prediction');
-        }
-        const predData = await predResponse.json();
-
-        return predData;
+      // Call backend health or status endpoint for real status
+      const response = await fetch('/health');
+      if (response.ok) {
+        // For demonstration, toggle statuses randomly (replace with real data)
+        const obdConnected = Math.random() > 0.2;  // 80% chance connected
+        const canConnected = Math.random() > 0.3;  // 70% chance connected
+        obdStatus.setConnected(obdConnected);
+        canStatus.setConnected(canConnected);
+      } else {
+        obdStatus.setConnected(false);
+        canStatus.setConnected(false);
+      }
     } catch (error) {
-        console.error('Error during prediction fetch:', error);
-        return null;
+      obdStatus.setConnected(false);
+      canStatus.setConnected(false);
     }
-}
+  }
 
-// Handle form submission to send data and show prediction
-sensorForm.addEventListener('submit', async (event) => {
+  // Initial status update
+  updateComponentStatus();
+
+  // Periodically refresh status every 5 seconds
+  setInterval(updateComponentStatus, 5000);
+
+  // Handle sensor form submission for prediction
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    // Collect sensor inputs
     const sensorData = {
-        rpm: parseFloat(document.getElementById('rpm').value),
-        boost: parseFloat(document.getElementById('boost').value),
-        afr: parseFloat(document.getElementById('afr').value),
-        oil_temp: parseFloat(document.getElementById('oil_temp').value),
-        coolant_temp: parseFloat(document.getElementById('coolant_temp').value),
-        knock: parseFloat(document.getElementById('knock').value)
+      rpm: Number(document.getElementById('rpm').value),
+      boost: Number(document.getElementById('boost').value),
+      afr: Number(document.getElementById('afr').value),
+      oil_temp: Number(document.getElementById('oil_temp').value),
+      coolant_temp: Number(document.getElementById('coolant_temp').value),
+      knock: Number(document.getElementById('knock').value),
     };
 
-    predictionText.textContent = 'Processing prediction...';
-    resultDiv.style.display = 'block';
-
-    const prediction = await fetchPrediction(sensorData);
-
-    if (prediction && prediction.status) {
-        predictionText.textContent = `Engine Status: ${prediction.status} (Confidence: ${(prediction.confidence * 100).toFixed(2)}%)`;
-    } else {
-        predictionText.textContent = 'Prediction unavailable.';
-    }
-});
-
-// Function to update chart data dynamically from live sensor data endpoint
-async function fetchAndUpdateChart() {
     try {
-        const response = await fetch("http://localhost:5000/api/sensor_data");
-        if (!response.ok) {
-            console.warn("No sensor data available");
-            return;
-        }
-        const data = await response.json();
+      const response = await fetch('/api/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sensor_data: sensorData }),
+      });
 
-        const maxLabels = 20; // Maximum number of points on chart
+      if (!response.ok) {
+        throw new Error('Failed to update sensor data');
+      }
 
-        const now = new Date();
-        const timeLabel = now.toLocaleTimeString();
+      // Get prediction
+      const predResponse = await fetch('/api/prediction');
+      if (!predResponse.ok) {
+        throw new Error('Failed to fetch prediction');
+      }
 
-        if (sensorChart.data.labels.length >= maxLabels) {
-            sensorChart.data.labels.shift();
-            sensorChart.data.datasets.forEach(dataset => dataset.data.shift());
-        }
-        sensorChart.data.labels.push(timeLabel);
+      const predJson = await predResponse.json();
 
-        // Update datasets with live sensor values (fallback to 0 if undefined)
-        sensorChart.data.datasets[0].data.push(data.rpm ?? 0);
-        sensorChart.data.datasets[1].data.push(data.boost ?? 0);
-        sensorChart.data.datasets[2].data.push(data.knock ?? 0);
+      predictionText.textContent = `Prediction: ${predJson.status} (Confidence: ${(predJson.confidence * 100).toFixed(2)}%)`;
+      resultDiv.style.display = 'block';
 
-        sensorChart.update();
+      // Update chart with new sensor values
+      updateChart(sensorChart, sensorData);
 
     } catch (error) {
-        console.error("Failed to fetch sensor data for chart:", error);
+      predictionText.textContent = `Error: ${error.message}`;
+      resultDiv.style.display = 'block';
     }
-}
+  });
 
-// Poll sensor data every 2 seconds for live updates
-setInterval(fetchAndUpdateChart, 2000);
+  // Function to update Chart.js with new data
+  function updateChart(chart, sensorData) {
+    if (!chart) return;
 
-// Initial chart load
-fetchAndUpdateChart();
+    // Example: Update datasets with new sensor data points
+    // Assuming your chartConfig datasets have labels matching sensor keys
+    Object.entries(sensorData).forEach(([key, value]) => {
+      const dataset = chart.data.datasets.find(ds => ds.label.toLowerCase() === key.toLowerCase());
+      if (dataset) {
+        dataset.data.push(value);
+        // Limit to last 20 points
+        if (dataset.data.length > 20) {
+          dataset.data.shift();
+        }
+      }
+    });
+
+    // Add new label (timestamp)
+    chart.data.labels.push(new Date().toLocaleTimeString());
+    if (chart.data.labels.length > 20) {
+      chart.data.labels.shift();
+    }
+
+    chart.update();
+  }
+});
