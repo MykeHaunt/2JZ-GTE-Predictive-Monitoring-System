@@ -1,0 +1,47 @@
+<svg width="700" height="280" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif" font-size="12">
+  <!-- ECU -->
+  <rect x="10" y="20" width="180" height="240" fill="#d0e0f0" stroke="#000" stroke-width="1"/>
+  <text x="20" y="40" fill="#000" font-weight="bold">Toyota 2JZ-GTE Engine ECU</text>
+  <line x1="80" y1="70" x2="180" y2="70" stroke="#000" stroke-width="2"/>
+  <text x="20" y="75" fill="#000">CAN_H ------------------&gt;</text>
+  <line x1="80" y1="100" x2="180" y2="100" stroke="#000" stroke-width="2"/>
+  <text x="20" y="105" fill="#000">CAN_L ------------------&gt;</text>
+  <line x1="80" y1="140" x2="180" y2="140" stroke="#000" stroke-width="2"/>
+  <text x="20" y="145" fill="#000">Boost Pressure Sensor (0-5V)</text>
+  <line x1="80" y1="180" x2="180" y2="180" stroke="#000" stroke-width="2"/>
+  <text x="20" y="185" fill="#000">AFR Sensor (0-5V)</text>
+  <line x1="80" y1="220" x2="180" y2="220" stroke="#000" stroke-width="2"/>
+  <text x="20" y="225" fill="#000">Knock Sensor (AC Output)</text>
+  <line x1="80" y1="260" x2="180" y2="260" stroke="#000" stroke-width="2"/>
+  <text x="20" y="265" fill="#000">RPM Signal (Hall Sensor)</text>
+
+  <!-- Sensor Harness -->
+  <rect x="190" y="30" width="170" height="220" fill="#f0f8ff" stroke="#000" stroke-width="1"/>
+  <text x="200" y="50" fill="#000" font-weight="bold">Sensor Harness</text>
+
+  <line x1="190" y1="70" x2="370" y2="70" stroke="#0077cc" stroke-width="3"/>
+  <text x="195" y="65" fill="#0077cc">CAN_H (Shielded)</text>
+  <line x1="190" y1="100" x2="370" y2="100" stroke="#0077cc" stroke-width="3"/>
+  <text x="195" y="95" fill="#0077cc">CAN_L (Shielded)</text>
+
+  <line x1="190" y1="140" x2="370" y2="140" stroke="#cc5500" stroke-width="3"/>
+  <text x="195" y="135" fill="#cc5500">ADC Channel A0 (Boost)</text>
+
+  <line x1="190" y1="180" x2="370" y2="180" stroke="#cc5500" stroke-width="3"/>
+  <text x="195" y="175" fill="#cc5500">ADC Channel A1 (AFR)</text>
+
+  <line x1="190" y1="220" x2="370" y2="220" stroke="#cc5500" stroke-width="3"/>
+  <text x="195" y="215" fill="#cc5500">ADC Channel A2 (Knock)</text>
+
+  <line x1="190" y1="260" x2="370" y2="260" stroke="#228833" stroke-width="3"/>
+  <text x="195" y="255" fill="#228833">GPIO18 (RPM)</text>
+
+  <!-- Raspberry Pi -->
+  <rect x="380" y="30" width="180" height="240" fill="#e0ffe0" stroke="#000" stroke-width="1"/>
+  <text x="400" y="50" fill="#000" font-weight="bold">Raspberry Pi 4</text>
+  <text x="400" y="70" fill="#000">PiCAN2 CAN_H Pin</text>
+  <text x="400" y="100" fill="#000">PiCAN2 CAN_L Pin</text>
+  <text x="400" y="140" fill="#000">MCP3008 (SPI) ADC Inputs</text>
+  <text x="400" y="180" fill="#000">ADC A0, A1, A2</text>
+  <text x="400" y="260" fill="#000">GPIO18 Input (RPM)</text>
+</svg>
