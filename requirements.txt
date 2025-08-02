@@ -1,16 +1,18 @@
-# Core ML dependencies
-scikit-learn>=1.3.0
-tensorflow>=2.12.0
+# ---------------------
+# Core Dependencies
+# ---------------------
+flask==2.3.3
+numpy==1.26.4
+scikit-learn==1.4.2
+joblib==1.4.2
 
-# Web framework
-Flask>=2.3.0
+# ---------------------
+# TensorFlow Runtime
+# ---------------------
+tensorflow==2.14.0
 
-# Data handling
-pandas>=2.0.0
-numpy>=1.24.0
-
-# Utility
-gunicorn>=21.2.0
-
-# Type checking
-typing-extensions>=4.6.0
+# ---------------------
+# Utility & Server Tools
+# ---------------------
+gunicorn==21.2.0
+requests==2.31.0
