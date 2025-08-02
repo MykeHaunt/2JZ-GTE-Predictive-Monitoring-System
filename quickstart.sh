@@ -1,50 +1,64 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
-# Create logs directory if not present
+# ------------------ Configuration ------------------
+PROJECT_ROOT="${PROJECT_ROOT:-$(pwd)}"
+cd "$PROJECT_ROOT"
 mkdir -p logs
 
+# ------------------ Header -------------------------
 echo "====================================================="
-echo "     2JZ-GTE Predictive Monitoring Quick Start"
+echo "       2JZ-GTE Predictive Monitoring Launcher"
 echo "====================================================="
-echo "Which model backends would you like to run?"
-echo "1) sklearn only"
-echo "2) tensorflow only"
-echo "3) both (default)"
-read -p "Enter your choice [1/2/3]: " choice
+echo "Choose which backend(s) to run:"
+echo "1) SKLearn only"
+echo "2) TensorFlow only"
+echo "3) Both (default)"
+read -rp "Enter your choice [1/2/3]: " choice
+choice="${choice:-3}"
+echo "====================================================="
 
-# Set environment variables
-export FLASK_ENV=production
-export MODEL_PATH="./models/sklearn_model.pkl"
-export TF_MODEL_PATH="./models/tf_model"
+# ------------------ Search for Entrypoints -------------------------
+
+# Find app.py or file that contains 'Flask' definition
+ENTRY_SKLEARN=$(grep -Rl --include='*.py' -E 'Flask|app = Flask' . | grep -v 'run_with_tf' | head -n1 || true)
+[ -n "$ENTRY_SKLEARN" ] || { echo "❌ Could not find SKLearn Flask entrypoint."; exit 1; }
+
+# Find run_with_tf.py
+ENTRY_TF=$(find . -type f -name 'run_with_tf.py' | head -n1 || true)
+[ -n "$ENTRY_TF" ] || echo "⚠️ Warning: TensorFlow runner not found. Skipping TF launch."
+
+# ------------------ Backend Launch Functions ----------------------
 
 run_sklearn() {
-    echo ">> Starting SKLearn Predictor (app.py)"
-    nohup python3 app.py > logs/sklearn.log 2>&1 &
-    echo ">> SKLearn backend running in background (PID $!)"
+    echo "▶ Starting SKLearn backend: $ENTRY_SKLEARN"
+    nohup python3 "$ENTRY_SKLEARN" > logs/sklearn.log 2>&1 &
+    echo "   ↳ PID $! | Logs: logs/sklearn.log"
 }
 
 run_tensorflow() {
-    echo ">> Starting TensorFlow Predictor (run_with_tf.py)"
-    nohup python3 run_with_tf.py > logs/tensorflow.log 2>&1 &
-    echo ">> TensorFlow backend running in background (PID $!)"
+    if [ -n "$ENTRY_TF" ]; then
+        echo "▶ Starting TensorFlow backend: $ENTRY_TF"
+        export TF_MODEL_PATH="${TF_MODEL_PATH:-./models/tf_model}"
+        nohup python3 "$ENTRY_TF" > logs/tensorflow.log 2>&1 &
+        echo "   ↳ PID $! | Logs: logs/tensorflow.log"
+    else
+        echo "⚠️ Skipping TensorFlow backend (file not found)."
+    fi
 }
 
-case $choice in
-    1)
-        run_sklearn
-        ;;
-    2)
-        run_tensorflow
-        ;;
-    *)
-        run_sklearn
-        run_tensorflow
-        ;;
+# ------------------ Execution -----------------------
+
+case "$choice" in
+    1) run_sklearn ;;
+    2) run_tensorflow ;;
+    3|*) run_sklearn; run_tensorflow ;;
 esac
 
+# ------------------ Footer --------------------------
+
 echo "====================================================="
-echo "Backends started. Logs: logs/sklearn.log & logs/tensorflow.log"
-echo "You may now access the system through the frontend."
+echo "🟢 Backends launched. View logs in the ./logs/ folder."
+echo "🛠 Use 'ps' or 'jobs -l' to manage running services."
 echo "====================================================="
