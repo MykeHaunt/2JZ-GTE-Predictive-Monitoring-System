@@ -1,8 +1,3 @@
-Certainly. Below is the complete, production-level README.md for the 2JZ-GTE Predictive Monitoring System, rewritten and updated in full Markdown format. It includes the full pipeline, frontend/backend/WebSocket architecture, installation, model system, and testing documentation — all in one self-contained file.
-
-⸻
-
-
 # 2JZ-GTE Predictive Monitoring System
 
 [![GNU GPL v3 License](https://img.shields.io/badge/License-GNU%20GPL%20v3-green.svg)](LICENSE)
