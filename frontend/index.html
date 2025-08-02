@@ -1,121 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>2JZ-GTE Predictive Monitoring Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <title>2JZ-GTE Live Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </head>
-<body>
-  <div class="container">
-    <h1>2JZ-GTE Predictive Monitoring</h1>
+<body class="day-theme">
 
-    <form id="predict-form">
-      <div class="inputs-grid">
-        <label>RPM: <input type="number" id="rpm" required /></label>
-        <label>Boost (bar): <input type="number" step="0.01" id="boost" required /></label>
-        <label>AFR: <input type="number" step="0.1" id="afr" required /></label>
-        <label>Oil Temp (°C): <input type="number" step="0.1" id="oil_temp" required /></label>
-        <label>Coolant Temp (°C): <input type="number" step="0.1" id="coolant_temp" required /></label>
-        <label>Knock Level: <input type="number" step="0.01" id="knock" required /></label>
-      </div>
+  <h1>2JZ-GTE Predictive Monitoring Dashboard</h1>
 
-      <div class="model-select">
-        <label>
-          Choose model:
-          <select id="model-choice">
-            <option value="sklearn">SKLearn</option>
-            <option value="tensorflow">TensorFlow</option>
-            <option value="both" selected>Both</option>
-          </select>
-        </label>
-      </div>
-
-      <button type="submit">Predict</button>
-    </form>
-
-    <div id="results">
-      <!-- Dynamic results will be inserted here -->
-    </div>
-
-    <canvas id="predictionChart"></canvas>
+  <div class="metrics-grid">
+    <div class="metric-card"><div>RPM</div><div id="rpm">--</div></div>
+    <div class="metric-card"><div>Boost</div><div id="boost">--</div></div>
+    <div class="metric-card"><div>AFR</div><div id="afr">--</div></div>
+    <div class="metric-card"><div>Coolant</div><div id="coolant">--</div></div>
+    <div class="metric-card"><div>Knock</div><div id="knock">--</div></div>
   </div>
 
+  <h2>Live Auto-Calculated Metrics</h2>
+  <div class="metrics-grid">
+    <div class="metric-card"><div>AFR Δ</div><div id="afr-delta">--</div></div>
+    <div class="metric-card"><div>Coolant Rise (°C/s)</div><div id="coolant-rate">--</div></div>
+    <div class="metric-card"><div>Turbo Response</div><div id="turbo-response">--</div></div>
+  </div>
+
+  <div id="live-update-indicator">Streaming @ ~23.6Hz</div>
+
   <script>
-    const form = document.getElementById('predict-form');
-    const resultsDiv = document.getElementById('results');
-    const ctx = document.getElementById('predictionChart').getContext('2d');
-    let chart;
+    const metrics = {
+      afr: [],
+      coolant: [],
+      rpm: [],
+      boost: [],
+      timestamps: []
+    };
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      resultsDiv.innerHTML = '';  // clear previous
-      const data = {
-        rpm: Number(document.getElementById('rpm').value),
-        boost: Number(document.getElementById('boost').value),
-        afr: Number(document.getElementById('afr').value),
-        oil_temp: Number(document.getElementById('oil_temp').value),
-        coolant_temp: Number(document.getElementById('coolant_temp').value),
-        knock: Number(document.getElementById('knock').value),
-      };
-      const choice = document.getElementById('model-choice').value;
+    function updateMetricHistory(key, value) {
+      if (!metrics[key]) metrics[key] = [];
+      metrics[key].push(value);
+      if (metrics[key].length > 30) metrics[key].shift();
+    }
 
-      const endpoints = [];
-      if (choice === 'sklearn' || choice === 'both') {
-        endpoints.push({ name: 'SKLearn', url: '/predict' });
-      }
-      if (choice === 'tensorflow' || choice === 'both') {
-        endpoints.push({ name: 'TensorFlow', url: '/predict-tf' });
-      }
+    function calculateMetrics() {
+      const len = metrics.timestamps.length;
+      if (len < 2) return;
 
-      const labels = [];
-      const values = [];
+      const afrDelta = metrics.afr[len-1] - metrics.afr[len-2];
+      const coolantRate = (metrics.coolant[len-1] - metrics.coolant[len-2]) /
+                          (metrics.timestamps[len-1] - metrics.timestamps[len-2]);
+      const rpmDelta = metrics.rpm[len-1] - metrics.rpm[len-2];
+      const boostDelta = metrics.boost[len-1] - metrics.boost[len-2];
+      const turboResponse = rpmDelta !== 0 ? (boostDelta / rpmDelta) : 0;
 
-      await Promise.all(endpoints.map(async (ep) => {
-        try {
-          const res = await fetch(ep.url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-          });
-          const json = await res.json();
-          const prob = json.failure_probability ?? json.confidence ?? json.failure_likely;
-          // Normalize boolean to numeric if needed
-          const numericProb = typeof prob === 'boolean' ? (prob ? 1 : 0) : Number(prob).toFixed(3);
+      document.getElementById("afr-delta").innerText = afrDelta.toFixed(3);
+      document.getElementById("coolant-rate").innerText = coolantRate.toFixed(4);
+      document.getElementById("turbo-response").innerText = turboResponse.toFixed(5);
+    }
 
-          // Display textual result
-          const p = document.createElement('p');
-          p.textContent = `${ep.name} → Failure probability: ${numericProb}`;
-          resultsDiv.appendChild(p);
+    const socket = io("http://localhost:5050");
 
-          labels.push(ep.name);
-          values.push(parseFloat(numericProb));
-        } catch (err) {
-          const p = document.createElement('p');
-          p.textContent = `${ep.name} → Error: ${err.message}`;
-          resultsDiv.appendChild(p);
-        }
-      }));
+    socket.on("sensor_data", function(data) {
+      const now = Date.now() / 1000;
+      metrics.timestamps.push(now);
+      updateMetricHistory("afr", data.afr);
+      updateMetricHistory("coolant", data.coolant_temp);
+      updateMetricHistory("rpm", data.rpm);
+      updateMetricHistory("boost", data.boost);
+      calculateMetrics();
 
-      // Render Chart.js bar chart
-      if (chart) chart.destroy();
-      chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels,
-          datasets: [{
-            label: 'Failure Probability',
-            data: values,
-          }]
-        },
-        options: {
-          scales: {
-            y: { beginAtZero: true, max: 1 }
-          }
-        }
-      });
+      document.getElementById("rpm").innerText = data.rpm;
+      document.getElementById("boost").innerText = data.boost + " bar";
+      document.getElementById("afr").innerText = data.afr;
+      document.getElementById("coolant").innerText = data.coolant_temp + " °C";
+      document.getElementById("knock").innerText = data.knock;
     });
   </script>
 </body>
