@@ -1,0 +1,22 @@
+<svg width="700" height="150" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif" font-size="12">
+  <!-- ECU -->
+  <rect x="10" y="40" width="180" height="80" fill="#d0e0f0" stroke="#000" stroke-width="1"/>
+  <text x="30" y="70" fill="#000" font-weight="bold">Toyota 2JZ-GTE ECU</text>
+  <line x1="190" y1="70" x2="280" y2="70" stroke="#000" stroke-width="3"/>
+  <text x="195" y="65" fill="#000">CAN_H</text>
+  <line x1="190" y1="90" x2="280" y2="90" stroke="#000" stroke-width="3"/>
+  <text x="195" y="85" fill="#000">CAN_L</text>
+
+  <!-- CAN Bus Line -->
+  <line x1="280" y1="70" x2="420" y2="70" stroke="#0077cc" stroke-width="5"/>
+  <line x1="280" y1="90" x2="420" y2="90" stroke="#0077cc" stroke-width="5"/>
+  <rect x="420" y="55" width="150" height="50" fill="#f0f8ff" stroke="#000" stroke-width="1"/>
+  <text x="430" y="75" fill="#000" font-weight="bold">CAN Bus Lines</text>
+  <text x="430" y="95" fill="#000">Twisted Pair + 120Ω Terminators</text>
+
+  <!-- PiCAN2 -->
+  <rect x="570" y="40" width="120" height="80" fill="#e0ffe0" stroke="#000" stroke-width="1"/>
+  <text x="590" y="70" fill="#000" font-weight="bold">PiCAN2 CAN Interface</text>
+  <line x1="570" y1="70" x2="570" y2="90" stroke="#228833" stroke-width="3"/>
+  <text x="575" y="80" fill="#228833">CAN_H and CAN_L pins</text>
+</svg>
