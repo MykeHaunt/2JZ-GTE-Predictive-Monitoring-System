@@ -9,6 +9,15 @@
 [![Test Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen)]()  
 [![Maintenance](https://img.shields.io/badge/maintenance-active-brightgreen)]()
 
+## 💖 Sponsor This Project
+
+[![GitHub Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-Donate-fpink?logo=githubsponsors&style=for-the-badge)](https://github.com/sponsors/MykeHaunt)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support_Me-ff5e5b?logo=ko-fi&logoColor=white&style=for-the-badge)](https://ko-fi.com/MykeHaunt)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Donate-yellow?logo=buymeacoffee&logoColor=white&style=for-the-badge)](https://www.buymeacoffee.com/MykeHaunt)
+[![Patreon](https://img.shields.io/badge/Patreon-Become_a_Patron-orange?logo=patreon&logoColor=white&style=for-the-badge)](https://www.patreon.com/MykeHaunt)
+[![PayPal](https://img.shields.io/badge/PayPal-Donate-00457C?logo=paypal&logoColor=white&style=for-the-badge)](https://paypal.me/MykeHaunt)
+[![Stripe](https://img.shields.io/badge/Sponsor%20via-Stripe-008CDD?logo=stripe&logoColor=white&style=for-the-badge)](https://mykehaunt.com/sponsor)
+
 ---
 
 **Version:** 1.2.1  
