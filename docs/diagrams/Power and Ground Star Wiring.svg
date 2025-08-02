@@ -1,0 +1,43 @@
+<svg width="600" height="220" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif" font-size="12">
+
+  <!-- Battery -->
+  <rect x="10" y="10" width="100" height="40" fill="#ffd0d0" stroke="#000" stroke-width="1"/>
+  <text x="25" y="35" fill="#000" font-weight="bold">+12 V Battery</text>
+
+  <!-- DC-DC Converter -->
+  <rect x="130" y="10" width="120" height="40" fill="#d0d0ff" stroke="#000" stroke-width="1"/>
+  <text x="150" y="35" fill="#000" font-weight="bold">Isolated DC-DC</text>
+  <text x="150" y="50" fill="#000">5 V Output</text>
+
+  <!-- Connections -->
+  <line x1="110" y1="30" x2="130" y2="30" stroke="#000" stroke-width="3"/>
+
+  <!-- 5V Power Rail -->
+  <line x1="250" y1="30" x2="550" y2="30" stroke="#ff8000" stroke-width="3"/>
+  <text x="260" y="25" fill="#ff8000">5 V Power Rail</text>
+
+  <!-- PiCAN2 -->
+  <rect x="300" y="60" width="100" height="40" fill="#e0ffe0" stroke="#000" stroke-width="1"/>
+  <text x="310" y="85" fill="#000" font-weight="bold">PiCAN2 Board</text>
+  <line x1="350" y1="100" x2="350" y2="140" stroke="#000" stroke-width="2"/>
+
+  <!-- ADC Board -->
+  <rect x="430" y="60" width="100" height="40" fill="#e0ffe0" stroke="#000" stroke-width="1"/>
+  <text x="445" y="85" fill="#000" font-weight="bold">ADC Board</text>
+  <line x1="480" y1="100" x2="480" y2="140" stroke="#000" stroke-width="2"/>
+
+  <!-- Raspberry Pi -->
+  <rect x="360" y="150" width="160" height="60" fill="#e0f0ff" stroke="#000" stroke-width="1"/>
+  <text x="400" y="180" fill="#000" font-weight="bold">Raspberry Pi 4</text>
+
+  <!-- Ground Star -->
+  <circle cx="250" cy="170" r="10" fill="#cccccc" stroke="#000" stroke-width="1"/>
+  <text x="230" y="185" fill="#000" font-weight="bold">Ground Star</text>
+
+  <line x1="250" y1="180" x2="250" y2="210" stroke="#000" stroke-width="3"/>
+  <line x1="250" y1="180" x2="350" y2="170" stroke="#000" stroke-width="2"/>
+  <line x1="250" y1="180" x2="480" y2="170" stroke="#000" stroke-width="2"/>
+  <line x1="250" y1="180" x2="450" y2="180" stroke="#000" stroke-width="2"/>
+  <line x1="250" y1="180" x2="400" y2="210" stroke="#000" stroke-width="2"/>
+
+</svg>
