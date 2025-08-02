@@ -1,9 +1,16 @@
-flask>=2.2
-pandas
-numpy
-scikit-learn
-matplotlib
-seaborn
-joblib
-gunicorn
-python-dotenv
+# Core ML dependencies
+scikit-learn>=1.3.0
+tensorflow>=2.12.0
+
+# Web framework
+Flask>=2.3.0
+
+# Data handling
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Utility
+gunicorn>=21.2.0
+
+# Type checking
+typing-extensions>=4.6.0
