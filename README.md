@@ -348,15 +348,16 @@ Refer to the enclosed `LICENSE` file for full terms.
 
 ---
 
-## Project Diagrams
-
-### Engine Architecture
-![Engine Architecture](https://raw.githubusercontent.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/main/docs/diagrams/engine_architecture.svg)
-
-### Data Flow Diagram
-![Data Flow Diagram](https://raw.githubusercontent.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/main/docs/diagrams/data_flow.svg)
+## 📊 System Diagrams
 
 ### CAN Bus Communication
-![CAN Bus Communication](https://raw.githubusercontent.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/main/docs/diagrams/can_bus.svg)
+![CAN Bus](https://raw.githubusercontent.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/main/docs/diagrams/CAN_BUS.svg)
 
----
+### Knock Sensor Circuit
+![Knock Sensor](https://raw.githubusercontent.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/main/docs/diagrams/Knock_Sensor_Circuit.svg)
+
+### Power and Ground Star Wiring
+![Power and Ground](https://raw.githubusercontent.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/main/docs/diagrams/Power_and_Ground_Star_Wiring.svg)
+
+### Wiring Harness Overview
+![Wiring Harness](https://raw.githubusercontent.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/main/docs/diagrams/Wiring_Harness.svg)
