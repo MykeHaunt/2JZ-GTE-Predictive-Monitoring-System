@@ -225,6 +225,8 @@ Derived from sequential sensor input using time-based difference calculations.
 
 ## Engine Technical Specs
 
+### 🏭 Factory Configuration
+
 | Specification      | Value                               |
 |--------------------|-------------------------------------|
 | Displacement       | 2,997 cm³ (3.0 L)                   |
@@ -235,6 +237,28 @@ Derived from sequential sensor input using time-based difference calculations.
 | Power (Factory)    | 276 hp JDM; ~320 hp export markets  |
 
 > [^1]: Based on official Toyota specifications and reviewed technical sources.
+
+---
+
+### 🔧 Fully Built Configuration — 780 HP
+
+| Specification           | Value                                                  |
+|-------------------------|--------------------------------------------------------|
+| Displacement            | 2,997 cm³ (3.0 L)                                       |
+| Bore × Stroke           | 86 mm × 86 mm                                           |
+| Valvetrain              | DOHC, 24 valves with titanium retainers + dual valve springs |
+| Turbo System            | Single Precision 6870 Gen2 CEA (ball bearing)          |
+| Wastegate               | Twin Tial 44 mm external                               |
+| Compression Ratio       | 9.0 : 1 (CP forged pistons)                            |
+| Connecting Rods         | Carrillo H-beam, ARP 625+ bolts                        |
+| Crankshaft              | OEM nitrided 2JZ-GTE, micro-polished                   |
+| Cylinder Head           | Ported & polished, multi-angle valve job              |
+| Fuel Injectors          | 1,600 cc/min Bosch Motorsport (E85 compatible)         |
+| Engine Management       | MoTeC M150 / LINK G4X / Haltech Nexus                  |
+| Power Output            | 780 hp @ 34 psi (E85)                                  |
+| Torque Output           | ~735 Nm @ 5,500 rpm                                    |
+
+> This configuration is dyno‑verified for 780 HP with full E85 mapping, using high-boost and race-grade internals. Designed for competitive track and drift applications.
 
 ---
 
