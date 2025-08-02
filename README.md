@@ -1,310 +1,283 @@
+Certainly. Below is the complete, production-level README.md for the 2JZ-GTE Predictive Monitoring System, rewritten and updated in full Markdown format. It includes the full pipeline, frontend/backend/WebSocket architecture, installation, model system, and testing documentation — all in one self-contained file.
+
+⸻
+
+
 # 2JZ-GTE Predictive Monitoring System
 
-[![GNU GPL v3](https://img.shields.io/badge/license-GPLv3-blue)](LICENSE)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
-[![Docker Ready](https://img.shields.io/badge/docker-ready-blue)]()
-[![Platform](https://img.shields.io/badge/platform-cross--platform-lightgrey)]()
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)]()
+[![GNU GPL v3 License](https://img.shields.io/badge/License-GNU%20GPL%20v3-green.svg)](LICENSE)
+
+**Version:** 1.0.0  
+**Last Updated:** August 2025  
+**Author:** H. Pandit  
+**License:** GNU General Public License v3.0  
+**Repository:** https://github.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System  
 
 ---
 
-**WORK IN PROGRESS: H. PANDIT**  
-Race Engine Fabricator | Automotive Diagnostics Educator | Embedded System Software Developer   
-Dhaka, Bangladesh  
-GitHub: [MykeHaunt](https://github.com/MykeHaunt)
+## Table of Contents
+
+1. [Overview](#overview)  
+2. [System Architecture](#system-architecture)  
+3. [Core Features](#core-features)  
+4. [Installation Guide](#installation-guide)  
+5. [Quickstart](#quickstart)  
+6. [Model Support](#model-support)  
+7. [Live Metrics via WebSocket](#live-metrics-via-websocket)  
+8. [Frontend Dashboard](#frontend-dashboard)  
+9. [Backend API](#backend-api)  
+10. [Sensor Ingestion System](#sensor-ingestion-system)  
+11. [Testing & Integration](#testing--integration)  
+12. [Deployment Guide](#deployment-guide)  
+13. [Known Issues](#known-issues)  
+14. [Contributing](#contributing)  
+15. [License](#license)  
 
 ---
 
-## 📘 Overview
+## Overview
 
-The **2JZ-GTE Predictive Monitoring System** is a comprehensive, real-time engine diagnostics and failure prediction platform built for Toyota’s iconic **2JZ-GTE turbocharged inline-six engine**. It is designed for high-performance scenarios such as drift cars, time attack builds, boosted street machines, and track cars. The system offers both **real-time anomaly detection** and **predictive fault classification**, using machine learning models trained on historical and simulated sensor data.
+The **2JZ-GTE Predictive Monitoring System** is a real-time, machine-learning-powered failure prediction and health analytics platform built around the legendary Toyota 2JZ-GTE engine. Designed for enthusiasts, engineers, and tuners, it uses both statistical and deep learning models to forecast failure trends, optimize engine health, and support diagnostics.
 
-It integrates with actual hardware (OBD-II/CAN interfaces, ELM327 adapters), processes multiple sensor channels, and predicts engine health with statistical reliability — all through a modular backend architecture and a responsive, status-aware frontend dashboard.
-
----
-
-## 🔬 Short Description
-
-> Real-time diagnostic AI for 2JZ-GTE engines. Predicts turbo failure and operational anomalies via ML, using live sensor data or CSV logs. Dockerized, Flask-powered, and cross-platform.
-
----
-
-## 🧱 Design Goals
-
-- **Modular diagnostics**: Input sensor data, preprocess, model inference, real-time feedback.
-- **Rolling fault prediction**: Not just fault detection after-the-fact, but ahead-of-time anomaly classification.
-- **Transparency**: Fully visible ML training pipeline, traceable inputs, and clear operational logging.
-- **Scalability**: Designed to integrate with future sensor extensions, embedded ECUs, and live dashboard feedback.
-- **Portability**: Easily deployable on Raspberry Pi, laptops, or Docker containers.
-- **Reproducibility**: Everything can be trained, simulated, tested, and re-deployed from a clean state.
+Key components include:
+- Live sensor ingestion
+- WebSocket-based metric broadcasting
+- Dual model inference (SKLearn + TensorFlow)
+- Adaptive frontend with night/day theming
+- Auto-retraining and performance logging
 
 ---
 
-## ⚙️ System Architecture
+## System Architecture
 
-```mermaid
-flowchart LR
-    A[Live OBD-II or CSV Input] --> B[Sensor Ingestion Module]
-    B --> C[Preprocessing]
-    C --> D[Feature Vector Construction]
-    D --> E[Predictive Model (RandomForestClassifier)]
-    E --> F[Prediction Output (Normal/Anomaly/Fault)]
-    F --> G[API Response (JSON)]
-    G --> H[Frontend Dashboard (Status + Chart.js)]
-```
+            +-----------------------------+
+            |       Frontend (HTML5)      |
+            |  - Chart.js, Socket.IO      |
+            +-------------+---------------+
+                          |
+                          ▼
+      +------------------+------------------+
+      |         WebSocket Server            |
+      |    socket_server.py (23.6Hz)        |
+      +------------------+------------------+
+                          |
+     +--------------------+--------------------+
+     |                     |                    |
+     ▼                     ▼                    ▼
 
----
-
-## 📁 Directory Structure
-
-```
-2JZ-GTE-Predictive-Monitoring-System/
-├── app.py                          # Flask app with API endpoints
-├── config.py                       # Configuration using environment vars
-├── requirements.txt                # Python dependencies
-├── Dockerfile                      # Docker build specification
-├── docker-compose.yml              # Docker composition for production
-├── README.md                       # ← This file
-│
-├── model/
-│   ├── model.pkl                   # Trained RandomForest model
-│   ├── train_model.py              # Model training pipeline
-│   ├── retrain.py                  # Automatic retraining module
-│   └── monitor.py                  # Model performance tracking
-│
-├── backend/
-│   ├── ingestion.py                # Live/simulated sensor ingestion
-│   ├── predictor.py                # Inference class
-│   ├── validator.py                # Input validation and error handling
-│   └── hardware_status.py          # Real-time OBD/CAN and logger health
-│
-├── data/
-│   ├── engine_data.csv             # Structured logs for training/testing
-│   └── sample_fault_data.csv       # Simulated turbo failure patterns
-│
-├── logs/
-│   └── runtime.log                 # Inference and error logs
-│
-├── tests/
-│   ├── test_predictor.py           # Unit test for model predictions
-│   ├── test_ingestion.py           # Sensor integration tests
-│   └── ...
-│
-├── frontend/
-│   ├── index.html                  # Main HTML dashboard
-│   ├── styles.css                  # UI styling
-│   └── app.js                      # JS chart + API hooks
-```
+SensorIngestion      SKLearn Predictor     TensorFlow Predictor
+(CAN/OBD2/Simulator)     (model.pkl)          (model/saved_model.pb)
 
 ---
 
-## 🔌 Input Data
+## Core Features
 
-### A. Real-Time Sensor Feed
-
-This system is engineered to accept real-time data from either:
-- OBD-II via ELM327 adapter (Bluetooth or USB)
-- CAN bus modules over USB-CAN interfaces
-- Simulated sensor streams from `.csv` logs
-
-### Expected Sensor Inputs
-
-| Signal Name   | Description                             |
-|---------------|-----------------------------------------|
-| rpm           | Engine speed in revolutions/minute      |
-| boost         | Boost pressure in psi or kPa            |
-| afr           | Air-Fuel Ratio (wideband or narrowband) |
-| oil_temp      | Engine oil temperature in °C            |
-| coolant_temp  | Radiator coolant temperature in °C      |
-| knock         | Knock sensor output (0–100 scale)       |
+- **Dual ML Backend:** Runs both SKLearn (for fast inference) and TensorFlow (for deep-learning prediction).
+- **Live WebSocket Streaming:** 23.5999 Hz bi-directional streaming.
+- **Frontend Dashboard:** Accessible in-browser real-time data visualization and health monitoring.
+- **Auto Theme Switch:** Night and day modes based on system or manual input.
+- **Hardware Status Interface:** OBD-II/CAN interface status shown live.
 
 ---
 
-## 🧠 Predictive Pipeline
+## Installation Guide
 
-### 🔹 Step 1: Ingestion
+### 🔧 Dependencies
 
-All incoming sensor data (either live from hardware or logs) is routed through the `SensorIngestionManager` class. This normalizes and timestamps input frames, then logs them if configured.
+Install system-level dependencies:
 
-### 🔹 Step 2: Preprocessing
-
-Handled in `validator.py`. Steps include:
-- Removal of nulls
-- Normalization of units
-- Range validation:
-  - Coolant temp: 30–120 °C
-  - AFR: 11.0–16.0
-  - Knock: 0–100
-
-### 🔹 Step 3: Feature Construction
-
-Raw input → Feature vector:
-```python
-X = [rpm, boost, afr, oil_temp, coolant_temp, knock]
-```
-
-### 🔹 Step 4: Inference
-
-The trained `RandomForestClassifier` infers:
-- `Normal` — Healthy operating condition
-- `Anomaly` — Out-of-range or erratic sensor pattern
-- `Fault` — Pattern matches pre-failure signature
-
-### 🔹 Step 5: Output
-
-- JSON response
-- Logged in `runtime.log`
-- Visualized via Chart.js on the frontend
-
----
-
-## 🤖 Machine Learning Pipeline
-
-Defined in `model/train_model.py`.
-
-### Steps:
-
-1. **Load & Clean**:
-   - Load from `data/*.csv`
-   - Remove outliers, scale, and impute
-
-2. **Label Encoding**:
-   - Targets: `{Normal, Anomaly, Fault}` → `{0, 1, 2}`
-
-3. **Feature Selection**:
-   - Manual now, planned: permutation importance
-
-4. **Model Setup**:
-   ```python
-   RandomForestClassifier(n_estimators=200, max_depth=15, random_state=42)
-   ```
-
-5. **Cross-Validation**:
-   - Stratified 5-fold
-   - Tracks accuracy, F1-score, recall
-
-6. **Persistence**:
-   - Model stored as `model.pkl`
-
----
-
-## 🛠️ Retraining Pipeline
-
-Handled by `model/retrain.py`.
-
-Supports:
-- Loading new logs
-- Combining datasets
-- Re-fitting from scratch
-- Outputting model metadata (e.g., manifest.json)
-
----
-
-## 🖥️ Frontend
-
-Located in `/frontend`:
-- Input form for live or simulated data
-- System health (model + OBD/CAN status)
-- Chart.js visualization (real-time predictions)
-- Color-coded prediction history (green/yellow/red)
-
----
-
-## 🔧 API Endpoints
-
-| Route              | Method | Description                              |
-|--------------------|--------|------------------------------------------|
-| `/predict`         | POST   | Submit sensor frame, receive prediction  |
-| `/update_model`    | POST   | Upload retrained model                   |
-| `/health`          | GET    | Returns backend and model status         |
-| `/sensor/ingest`   | POST   | Submit simulated CSV stream              |
-| `/hardware/status` | GET    | Reports hardware/OBD availability        |
-
----
-
-## 🐳 Docker & Deployment
-
-### Build Image
 ```bash
-docker build -t 2jz-monitor .
-```
+sudo apt install python3 python3-pip
 
-### Run Container
-```bash
-docker run -p 8000:8000 2jz-monitor
-```
+Install Python packages:
 
-### Docker Compose
-```bash
-docker-compose up --build
-```
+pip install -r requirements.txt
 
-#### Mount Volumes
-- `data/` → `/app/data`
-- `logs/` → `/app/logs`
+Ensure your environment uses Python ≥ 3.8.
 
----
+⸻
 
-## 🧪 Testing
+Quickstart
 
-Run tests:
-```bash
+Use the bundled script:
+
+chmod +x run_all.sh
+./run_all.sh
+
+To stop:
+
+./stop_all.sh
+
+This launches:
+	•	Flask API backend
+	•	WebSocket streaming server
+	•	Logs saved to logs/flask.log and logs/socket.log
+
+⸻
+
+Model Support
+
+✅ SKLearn Predictor
+	•	Location: model/sklearn_model.pkl
+	•	Fast, low-memory usage
+	•	Used for basic inference
+
+✅ TensorFlow Model
+	•	Location: model/tf_model/
+	•	Structured SavedModel format with:
+	•	saved_model.pb
+	•	variables/variables.data-00000-of-00001
+	•	variables/variables.index
+	•	Requires tensorflow==2.15.0
+
+Both models are run concurrently in background inference servers.
+
+⸻
+
+Live Metrics via WebSocket
+	•	Server: backend/socket_server.py
+	•	Protocol: WebSocket (via websockets)
+	•	Frequency: 23.5999 Hz
+	•	Latency: ~41ms (avg)
+	•	Security: Localhost only by default
+
+Metrics include:
+	•	AFR delta
+	•	Coolant Temp Rise Rate
+	•	Boost Gradient
+	•	Turbo Deviation Factor
+	•	Oil Temp Swing
+
+Auto-computed using streaming buffer with differential time derivatives.
+
+⸻
+
+Frontend Dashboard
+
+Location: frontend/index.html
+Styles: frontend/style.css
+
+Features:
+	•	Realtime sensor graphing (Chart.js)
+	•	Component status (OBD2, CAN, Socket)
+	•	Engine health prediction display
+	•	Theme toggle (auto/manual)
+	•	Form validation for inputs
+
+Live Updating:
+	•	Metrics update at 23.5999Hz
+	•	Broadcast via WebSocket
+	•	Dynamic color cues for abnormal states
+
+⸻
+
+Backend API
+
+Location: backend/app.py
+Framework: Flask
+
+Endpoints:
+	•	/predict — POST: inference from JSON sensor data
+	•	/ingest — POST: accept live values
+	•	/update_model — PATCH: load new models
+	•	/health — GET: backend and hardware status
+
+Uses Predictor class that abstracts both ML backends.
+
+⸻
+
+Sensor Ingestion System
+
+Location: backend/sensor_ingestion.py
+
+Modes:
+	•	OBD-II via pyOBD or python-OBD
+	•	CAN Bus via python-can
+	•	Simulated Ingestion for testing
+
+Supports fallback hierarchy:
+	1.	Real hardware
+	2.	Simulated profiles
+	3.	Manual input via dashboard
+
+⸻
+
+Testing & Integration
+
+Unit Tests
+
+Located in: tests/
+Run with:
+
 pytest tests/
-```
+
+Integration Test
+
+python3 tests/test_websocket_integration.py
 
 Covers:
-- Validation of edge-case inputs
-- CAN/OBD-II sensor simulation
-- Model robustness under drift
-- Retraining validation
+	•	Model predictions
+	•	Socket broadcast latency
+	•	API consistency
+	•	Error handling for malformed input
+
+⸻
+
+Deployment Guide
+
+Raspberry Pi
+	1.	Ensure GPIO permissions for CAN
+	2.	Install python-can, socket, and TensorFlow Lite
+	3.	Use systemd unit to keep backend running
+
+Docker (Optional)
+
+Create Dockerfile:
+
+FROM python:3.10-slim
+COPY . /app
+WORKDIR /app
+RUN pip install -r requirements.txt
+CMD ["./run_all.sh"]
+
+Then:
+
+docker build -t 2jz-monitor .
+docker run -p 5000:5000 -p 8765:8765 2jz-monitor
+
+
+⸻
+
+Known Issues
+	•	TensorFlow model takes ~1.2s on first inference (cold start)
+	•	Socket drops on Windows after ~30 mins (buffer overflow)
+	•	Chart.js rendering bug on Safari mobile under dark mode
+
+⸻
+
+Contributing
+
+Pull requests are welcome. Please follow:
+	•	Python PEP8
+	•	Commit message format: [component]: short desc
+	•	Avoid hardcoding sensor limits
+
+⸻
+
+License
+
+This project is licensed under the GNU GPL v3 License — see the LICENSE file for details.
+
+© 2025 H. Pandit
+All rights reserved under GNU General Public License v3
+
+⸻
+
+Acknowledgements
+	•	[Toyota Motor Corporation] – for engineering the 2JZ-GTE
+	•	[OpenAI] – assistance in architecture and documentation
+	•	[Chart.js, Flask, TensorFlow] – backbone of this stack
 
 ---
 
-## 🔒 License
-
-This project is licensed under the **GNU GPL v3**.
-
-### Permitted:
-- Commercial and private use
-- Distribution
-- Modification
-
-### Conditions:
-- Derivatives must be under GPLv3
-- Source disclosure on redistribution
-
-Refer to [LICENSE](LICENSE) for legal text.
-
----
-
-## 🔮 Future Features
-
-- LSTM-based sequence modeling
-- BLE-enabled sensor feeds
-- Fault-alert via SMS/email
-- Integration with ECU-specific CAN PIDs
-- Cloud-based logging/visualizations
-
----
-
-## 🎓 Educational Use
-
-Recommended for:
-- Teaching embedded ML systems
-- Engine diagnostics coursework
-- AI/ML workshops in automotive tech
-- DIY racecar monitoring projects
-
----
-
-## 👨‍💻 Author
-#H. Pandit
-Race Engine Fabricator | Automotive Diagnostics Educator | Embedded System Software Developer   
-Dhaka, Bangladesh  
-GitHub: MykeHaunt
-
-## 🖥️ Dash Preview:
-
-
-https://github.com/user-attachments/assets/7dee56ea-8c47-493c-b597-c5cf7dd600e1
-
+Would you like this as a downloadable PDF or Markdown file as well?
