@@ -1,71 +1,173 @@
-/* styles.css */
+:root {
+  --color-bg-light: #f8f9fa;
+  --color-bg-dark: #121212;
+  --color-fg-light: #000000;
+  --color-fg-dark: #f0f0f0;
+  --color-accent: #007BFF;
+  --card-bg-light: #ffffff;
+  --card-bg-dark: #1e1e1e;
+  --shadow-light: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --shadow-dark: 0 2px 6px rgba(255, 255, 255, 0.05);
+}
 
-/* Ensure body uses a readable font */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg-light);
+  color: var(--color-fg-light);
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* Responsive container padding */
+body.dark {
+  background-color: var(--color-bg-dark);
+  color: var(--color-fg-dark);
+}
+
 .container {
-    max-width: 960px;
-    margin: auto;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--card-bg-light);
+  box-shadow: var(--shadow-light);
+  border-radius: 8px;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-/* Form inputs full width */
-form input[type="number"] {
-    width: 100%;
+body.dark .container {
+  background-color: var(--card-bg-dark);
+  box-shadow: var(--shadow-dark);
 }
 
-/* Adjust form label font weight */
-form label {
-    font-weight: 600;
+h1 {
+  text-align: center;
+  font-weight: 500;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
 }
 
-/* System status badge spacing */
-#system-status-list .list-group-item {
-    font-size: 1rem;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-/* Badge colors for status */
-.badge-success {
-    background-color: #28a745 !important;
+.inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
 }
 
-.badge-danger {
-    background-color: #dc3545 !important;
+label {
+  font-size: 0.95rem;
 }
 
-.badge-warning {
-    background-color: #ffc107 !important;
+input, select {
+  margin-top: 0.25rem;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%;
 }
 
-/* Mobile adjustments */
-@media (max-width: 576px) {
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    /* Make form inputs bigger for touch */
-    form input[type="number"] {
-        font-size: 1.1rem;
-        padding: 0.5rem;
-    }
-
-    /* Buttons full width on mobile */
-    form button {
-        width: 100%;
-    }
+button[type="submit"] {
+  align-self: center;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
 }
 
-/* Prediction result styling */
-#result {
-    margin-top: 1rem;
+button[type="submit"]:hover {
+  transform: scale(1.03);
 }
 
-/* Chart canvas full width on small screens */
-canvas#sensorChart {
-    width: 100% !important;
-    height: auto !important;
+#results {
+  margin-top: 2rem;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+canvas {
+  margin-top: 2rem;
+  max-width: 100%;
+  height: 300px;
+}
+
+/* Additional Metrics Grid */
+.metrics-grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.metric-card {
+  background-color: rgba(0,0,0,0.03);
+  border-radius: 6px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: var(--shadow-light);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+body.dark .metric-card {
+  background-color: rgba(255,255,255,0.05);
+  box-shadow: var(--shadow-dark);
+}
+
+.metric-title {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+body.dark .metric-title {
+  color: #bbb;
+}
+
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+/* Live Update Indicator */
+#live-update-indicator {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #888;
+  font-family: monospace;
+}
+
+#live-update-indicator::before {
+  content: "🔄 ";
+}
+
+/* Theme Toggle Button (Optional) */
+#theme-toggle {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  padding: 0.4rem 0.7rem;
+  background-color: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: var(--shadow-light);
+}
+
+body.dark #theme-toggle {
+  box-shadow: var(--shadow-dark);
 }
