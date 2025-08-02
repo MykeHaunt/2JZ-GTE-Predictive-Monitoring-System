@@ -344,4 +344,19 @@ Refer to the enclosed `LICENSE` file for full terms.
 
 - **Toyota Motor Corporation** – Engineering of the 2JZ‑GTE engine  
 - **OpenAI** – Architectural and documentation assistance  
-- **Core Libraries** – `Chart.js`, `Flask`, `Flask‑SocketIO`, `TensorFlow`, `scikit-learn`  
+- **Core Libraries** – `Chart.js`, `Flask`, `Flask‑SocketIO`, `TensorFlow`, `scikit-learn`
+
+---
+
+## Project Diagrams
+
+### Engine Architecture
+![Engine Architecture](https://raw.githubusercontent.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/main/docs/diagrams/engine_architecture.svg)
+
+### Data Flow Diagram
+![Data Flow Diagram](https://raw.githubusercontent.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/main/docs/diagrams/data_flow.svg)
+
+### CAN Bus Communication
+![CAN Bus Communication](https://raw.githubusercontent.com/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System/main/docs/diagrams/can_bus.svg)
+
+---
