@@ -1,15 +1,24 @@
-# 2JZ‑GTE Predictive Monitoring System 📈
+# 📈 2JZ‑GTE Predictive Monitoring System 
+## 📦 Project Status & Metadata
 
-[![GNU GPL v3](https://img.shields.io/badge/license-GPLv3-blue)](LICENSE)  
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()  
-[![Docker Ready](https://img.shields.io/badge/docker-ready-blue)]()  
-[![Platform](https://img.shields.io/badge/platform-cross--platform-lightgrey)]()  
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)]()  
-[![Code Quality](https://img.shields.io/badge/code%20quality-A-brightgreen)]()  
-[![Test Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen)]()  
-[![Maintenance](https://img.shields.io/badge/maintenance-active-brightgreen)]()
+[![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue?style=for-the-badge&logo=gnu)](LICENSE)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge&logo=github-actions)]()
+[![Docker](https://img.shields.io/badge/docker-ready-blue?style=for-the-badge&logo=docker)]()
+[![Platform](https://img.shields.io/badge/platform-cross--platform-lightgrey?style=for-the-badge&logo=windows)]()
+[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg?style=for-the-badge&logo=python)]()
 
-## 💖 Sponsor This Project
+[![Code Quality](https://img.shields.io/badge/code%20quality-A-brightgreen?style=for-the-badge&logo=codefactor)]()
+[![Test Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen?style=for-the-badge&logo=jest)]()
+[![Maintenance](https://img.shields.io/badge/maintenance-active-brightgreen?style=for-the-badge&logo=dependabot)]()
+[![Version](https://img.shields.io/badge/version-v1.2.1-blue?style=for-the-badge&logo=semver)]()
+
+[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-orange?style=for-the-badge&logo=github)]()
+[![Open Issues](https://img.shields.io/github/issues/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System?style=for-the-badge&logo=github)]()
+[![Last Commit](https://img.shields.io/github/last-commit/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System?style=for-the-badge&logo=git)]()
+[![Stars](https://img.shields.io/github/stars/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System?style=for-the-badge)]()
+[![Forks](https://img.shields.io/github/forks/MykeHaunt/2JZ-GTE-Predictive-Monitoring-System?style=for-the-badge)]()
+
+## 💖 Sponsor & Support
 
 [![GitHub Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-Donate-fpink?logo=githubsponsors&style=for-the-badge)](https://github.com/sponsors/MykeHaunt)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support_Me-ff5e5b?logo=ko-fi&logoColor=white&style=for-the-badge)](https://ko-fi.com/MykeHaunt)
@@ -17,7 +26,6 @@
 [![Patreon](https://img.shields.io/badge/Patreon-Become_a_Patron-orange?logo=patreon&logoColor=white&style=for-the-badge)](https://www.patreon.com/MykeHaunt)
 [![PayPal](https://img.shields.io/badge/PayPal-Donate-00457C?logo=paypal&logoColor=white&style=for-the-badge)](https://paypal.me/MykeHaunt)
 [![Stripe](https://img.shields.io/badge/Sponsor%20via-Stripe-008CDD?logo=stripe&logoColor=white&style=for-the-badge)](https://mykehaunt.com/sponsor)
-
 ---
 
 **Version:** 1.2.1  
