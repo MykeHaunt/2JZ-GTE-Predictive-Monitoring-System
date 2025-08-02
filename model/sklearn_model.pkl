@@ -1,0 +1,12 @@
+# train_and_export_sklearn_model.py
+from sklearn.linear_model import LogisticRegression
+from sklearn.datasets import make_classification
+import joblib
+import os
+
+X, y = make_classification(n_samples=100, n_features=6, random_state=42)
+model = LogisticRegression()
+model.fit(X, y)
+
+os.makedirs("model", exist_ok=True)
+joblib.dump(model, "model/sklearn_model.pkl")
