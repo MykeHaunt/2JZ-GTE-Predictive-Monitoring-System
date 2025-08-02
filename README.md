@@ -1,5 +1,4 @@
-
-# 2JZ‑GTE Predictive Monitoring System
+# 2JZ‑GTE Predictive Monitoring System 📈
 
 [![GNU GPL v3](https://img.shields.io/badge/license-GPLv3-blue)](LICENSE)  
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()  
@@ -12,7 +11,7 @@
 
 ---
 
-**Version:** 1.2.0  
+**Version:** 1.2.1  
 **Last Updated:** August 2025  
 **Author:** H. Pandit  
 **License:** GNU General Public License v3.0  
