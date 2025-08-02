@@ -1,0 +1,2 @@
+# TensorFlow integration dependencies
+tensorflow>=2.12.0
