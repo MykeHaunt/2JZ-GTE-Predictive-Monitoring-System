@@ -1,0 +1,30 @@
+# GitHub Sponsors (https://github.com/sponsors)
+github: MykeHaunt
+
+# Ko-fi (https://ko-fi.com)
+ko_fi: MykeHaunt
+
+# Buy Me a Coffee (https://www.buymeacoffee.com)
+buy_me_a_coffee: MykeHaunt
+
+# Patreon (https://www.patreon.com)
+patreon: MykeHaunt
+
+# Open Collective (https://opencollective.com)
+open_collective: null
+
+# Tidelift (https://tidelift.com)
+tidelift: null
+
+# Community Bridge (https://funding.communitybridge.org)
+community_bridge: null
+
+# Liberapay (https://liberapay.com)
+liberapay: null
+
+# Custom link (for any funding source not listed above)
+custom:
+  - label: "Support via PayPal"
+    url: "https://paypal.me/MykeHaunt"
+  - label: "Sponsor via Stripe"
+    url: "https://mykehaunt.com/sponsor"
